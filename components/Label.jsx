@@ -13,7 +13,7 @@ function Label(props){
     })
 
     let A2 = a2.map(item => {
-        return <div >{item}</div>
+        return <div className="w-[10%] text-center" >{item}</div>
     })
 
     let A3 = a3.map(item => {

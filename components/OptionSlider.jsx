@@ -10,10 +10,10 @@ function OptionSlider(props){
    
 
     return(
-        <div className='flex justify-between mt-[30px]'>
-        <div>{props.name}</div>
-        <div className='w-[100%] ml-[35px]'>
-        <div className='relative'>
+        <div className='flex justify-between mt-[30px] w-[100%]'>
+        <div className="w-[20%]">{props.name}</div>
+        <div className='w-[100%]'>
+        <div className='relative  '>
                <Nouislider 
                  snap={props.flag==='op'?true:false}
                  range={props.range}

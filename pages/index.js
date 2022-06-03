@@ -1,22 +1,17 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Image from 'next/image'
-
 import "nouislider/distribute/nouislider.css";
 import React, {useState,useEffect} from 'react'
 import FormData from 'form-data';
 import axios from 'axios';
 import OptionSlider from '../components/OptionSlider'
 
-
-
 const numberWithCommas = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
 const carat_from = 0.30, carat_to = 30.00, price_from = 100, price_to = 900000
-
-    //generate carat range for slider
     var caratRangeArr = [];
     for (var e = '', t = [[0.18, 0.02], [1, 0.05], [2, 0.1], [2.5, 0.25], [4, 0.5], [10, 5], [20, 10], [carat_to]], i = carat_from, a = 0; a < t.length - 1; i += t[a][1]) {
         caratRangeArr.push(i.toFixed(2)), i >= t[a + 1][0] && a++;
@@ -58,10 +53,8 @@ var priceRangeArr = [];
             price_array[(price_step * index).toFixed(2)+'%'] = parseFloat(element);
         }
     })
-
-    //convert array to object			
+			
 const priceArr = JSON.parse(JSON.stringify(Object.assign({}, price_array)));  
-
 
 export default function Home({ ndata }) {
   const initialRender = React.useRef(true);
@@ -95,8 +88,6 @@ export default function Home({ ndata }) {
     sorting_order: 'ASC',
     sort_by: 'fame_price'
   }
-
-
 
 let [flag, setflag] = useState(false)
   function show(){
@@ -199,7 +190,7 @@ axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
   let shape = ['round','princess','cushion','asscher','marquise','oval','radiant','pear','emerald','heart']
   let  s = shape.map(item => {
    return(
-   <div className={`w-[40px] inline-block text-center cursor-pointer ${Data.shape.includes(item)?"border-black border ":" none"}`}>
+   <div className={` px-[5px] py-[5px]  inline-block text-center flex justify-center items-center cursor-pointer ${Data.shape.includes(item)?"border-black border ":" none"}`}>
       <Image
           src = {`/images/shapes/${item}.png`}
           width={30}
@@ -230,65 +221,60 @@ axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
     />
    </div>
 
-   <div className='mx-auto flex w-[60%] justify-between  z-50'>
-     <div className='w-[47%]'>
-       <div className='flex items-center mt-[30px]'>
-         <div>SHAPE</div>
-         <div className='ml-[10px] flex w-[100%] justify-between'>{s}</div>
-           
+   <div class="grid grid-cols-2 gap-x-20 w-[65%] mx-auto border-b pb-[20px] border-[#d1d1d1]">
+        <div className='flex items-center mt-[30px] w-[100%]'>
+         <div className='w-[20%]'>SHAPE</div>
+         <div className='flex w-[100%] justify-between items-center '>{s}</div> 
        </div>
-       <OptionSlider 
-       name="CARAT" 
-       range={caratArr} 
-       data={Data} 
-       click={handleChange} 
-       options={caratOptions}
-       left="filter_carat_min"
-       right="filter_carat_max"
-       handleclick={handle}
-       flag="op"
+
+     <OptionSlider 
+          name="PRICE" 
+          range={priceArr} 
+          data={Data} 
+          click={handleChange} 
+          options={priceOptions} 
+          handleclick={handle}
+          left="filter_price_min"
+          right="filter_price_max"
+          flag="op"
+     />
+       
+     
+      <OptionSlider 
+          name="CARAT" 
+          range={caratArr} 
+          data={Data} 
+          click={handleChange} 
+          options={caratOptions}
+          left="filter_carat_min"
+          right="filter_carat_max"
+          handleclick={handle}
+          flag="op"
        />
 
-<OptionSlider 
+      <OptionSlider 
+          name="CUT" 
+          range={{ min: 0 , max: 4 }}
+          data={Data} 
+          click={handleChange} 
+          handleclick={handle}
+          left="filter_cut_min"
+          right="filter_cut_max"
+          flag="cut"
+          kut={4}
+        />
+
+      <OptionSlider 
        name="COLOR" 
        range={{ min: 0 , max: 10 }}
        data={Data} 
        click={handleChange} 
-      
        left="filter_color_min"
        right="filter_color_max"
        handleclick={handle}
        flag="color"
-       kut="color"
+       kut={9}
        />
-       
-     </div>
-     <div className='w-[47%]'>
-     <OptionSlider 
-     name="PRICE" 
-     range={priceArr} 
-     data={Data} 
-     click={handleChange} 
-     options={priceOptions} 
-     handleclick={handle}
-     left="filter_price_min"
-     right="filter_price_max"
-     flag="op"
-     
-     />
-
-<OptionSlider 
-     name="CUT" 
-     range={{ min: 0 , max: 4 }}
-     data={Data} 
-     click={handleChange} 
-     handleclick={handle}
-     left="filter_cut_min"
-     right="filter_cut_max"
-     flag="cut"
-     kut="cut"
-     
-     />
 
 <OptionSlider 
      name="CLARITY" 
@@ -300,14 +286,15 @@ axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
      left="filter_clarity_min"
      right="filter_clarity_max"
      flag="clarity"
-     kut="color"
+     kut={9}
      
      />
-      
-     </div>
-   </div>
 
-   <div className= {` ${flag? "max-h-[500px] flex justify-between max-w-[60%] mx-auto modal overflow-hidden"  : "overflow-hidden max-h-[0px] flex justify-between max-w-[60%] mx-auto modal "}  `} >
+
+
+      </div>
+
+   <div className= {` ${flag? "max-h-[500px] flex justify-between max-w-[65%] mx-auto modal overflow-hidden"  : "overflow-hidden max-h-[0px] flex justify-between max-w-[60%] mx-auto modal "}  `} >
      <div className={`w-[47%]`}> 
 
      <OptionSlider 
@@ -320,7 +307,8 @@ axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
      left="filter_fluorescence_min"
      right="filter_fluorescence_max"
      flag="fluor"
-     kut="cut"
+     kut={4}
+    
      
      />
 
@@ -333,7 +321,7 @@ axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
      left="filter_symmerty_min"
      right="filter_symmerty_max"
      flag="symm"
-     kut="symm"
+     kut={5}
      
      />
 
@@ -348,7 +336,7 @@ axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
      flag="depth"
      />
           
-          <div className='flex justify-between mt-[30px]'>
+          <div className='flex justify-between mb-[30px] mt-[30px]'>
        <div>LOCATE</div>
        <div className='w-[100%] ml-[20px]'>
       
@@ -374,34 +362,37 @@ axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
      </div>
 
      <OptionSlider 
-     name="POLISH" 
-     range={{ min: 0 , max: 5 }}
-     data={Data} 
-     click={handleChange} 
-     handleclick={handle}
-     left="filter_polish_min"
-     right="filter_polish_max"
-     flag="polish"
-     kut="symm"
-     
+        name="POLISH" 
+        range={{ min: 0 , max: 5 }}
+        data={Data} 
+        click={handleChange} 
+        handleclick={handle}
+        left="filter_polish_min"
+        right="filter_polish_max"
+        flag="polish"
+        kut={5}
      />
 
-<OptionSlider 
-     name="DEPTH" 
-     range={{min:0,max:106.60}}
-     data={Data} 
-     click={handleChange} 
-     handleclick={handle}
-     left="filter_depth_min"
-     right="filter_depth_max"
-     flag="depth"
+    <OptionSlider 
+        name="DEPTH" 
+        range={{min:0,max:106.60}}
+        data={Data} 
+        click={handleChange} 
+        handleclick={handle}
+        left="filter_depth_min"
+        right="filter_depth_max"
+        flag="depth"
      />
       
     </div>
     </div>
    
-   <div><button className={`mx-auto block mt-[50px]`}  onClick={show} >advance filter</button></div>
-    </div>
+   <div className='max-w-[65%] mx-auto border-t  border-[#d1d1d1]'>
+     <button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`}  onClick={show} >ADVANCE FILTER</button>
+   </div>
+
+   
+   </div>
   )
 }
 
@@ -412,6 +403,5 @@ export async function getServerSideProps() {
 
   return { props: { ndata } }
 }
-
 
 

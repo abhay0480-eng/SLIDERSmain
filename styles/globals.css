@@ -26,7 +26,7 @@ a {
   box-shadow: none;
   margin-top: 5px;
   background: #fff;
-  width: 400px;
+  width: 100%;
 
 }
 
@@ -51,18 +51,18 @@ a {
 }
 
 .noUi-handle::after {
-  content: "fggg";
+  content: "";
   display: none !important;
   
 }
 .noUi-handle::before {
-  content: "uippi";
+  content: "";
   display: none !important;
   
 }
 
 html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
-  right: -14px !important;
+  right: -1px !important;
   left: auto;
 }
 
@@ -83,5 +83,5 @@ input{
 
 
 .modal {
-  transition: 0.8s ease-out;
+  transition: 0.9s ease-out;
 }
