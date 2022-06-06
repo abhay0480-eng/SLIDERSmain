@@ -11,8 +11,7 @@ function Cuts(prop){
       let a = 100/`${prop.p}`
       prop.p===4?three.push(`${a*i}%`):prop.p===9? ten.push(`${a*i}%`):five.push(`${a*i}%`)
     }
-   console.log(ten)
-   console.log(three)
+   
     let colour = ten.map(te=>{
       return <span className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[10px]`} style={{left:te}}>|</span>
 
