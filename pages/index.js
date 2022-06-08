@@ -6,6 +6,8 @@ import React, {useState,useEffect} from 'react'
 import FormData from 'form-data';
 import axios from 'axios';
 import OptionSlider from '../components/OptionSlider'
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { data } from 'autoprefixer';
 
 const numberWithCommas = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -58,6 +60,10 @@ const priceArr = JSON.parse(JSON.stringify(Object.assign({}, price_array)));
 
 export default function Home({ ndata }) {
   const initialRender = React.useRef(true);
+  const initialRender1 = React.useRef(false);
+
+
+
   
   let d = {
     filter_price_min: ndata.price_total_from_in_currency,
@@ -88,6 +94,7 @@ export default function Home({ ndata }) {
     sorting_order: 'ASC',
     sort_by: 'fame_price'
   }
+ 
 
 let [flag, setflag] = useState(false)
   function show(){
@@ -100,9 +107,13 @@ let [flag, setflag] = useState(false)
   let [Data, setData] = useState(d)
   useEffect(() => {  
   if (typeof window !== "undefined") {
-    setData(localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : d)
+    setData(localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items'))  : d)
+    console.log("off")
     
-  }
+ 
+   
+    console.log("offset")
+  }  setData(prev=>({...prev,page_offset:1})) 
   }, []);
 
   
@@ -127,35 +138,39 @@ const config = {
     headers: { 'content-type': 'multipart/form-data' }
 }
 
-// axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
-//     .then(response => {
-        
-//     })
-//     .catch(error => {
-//         console.log(error);
-//     });
-let [response,setResponse] = useState({})
+let [check,setCheck] = useState(0)
+
+let [response,setResponse] = useState({
+  diamonds : [],
+  total_records : 0
+})
 
     useEffect(() => {
-      axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
+      if(initialRender1.current){
+        axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
       .then(res => {
-        console.log('hello');
-        setResponse(res.data)
+        if( check===0){
+          setResponse(res.data)
+         
+        }else{
+          setResponse((prevData) => ({...prevData,diamonds:[...prevData.diamonds,...res.data.diamonds]}))
+          setCheck(0)
+        }
       })
       .catch(err => console.log(err));
+      }else{
+        initialRender1.current = true;
+      }
     }, [Data])
-    
+
     // console.log(response.diamonds[0].id)
-    
-    
-
-    
   
-
   useEffect(() => {
+    
     if (initialRender.current) {
       initialRender.current = false;
     } else {
+      
       localStorage.setItem('items', JSON.stringify(Data))
      
     }
@@ -165,13 +180,15 @@ let [response,setResponse] = useState({})
     
     setData(prevData => (prevData[arr].includes(item)?{
       ...prevData,
-     [arr]: [...prevData[arr].slice(0, prevData[arr].indexOf(item)),...prevData[arr].slice( prevData[arr].indexOf(item)+1)]
+     [arr]: [...prevData[arr].slice(0, prevData[arr].indexOf(item)),...prevData[arr].slice( prevData[arr].indexOf(item)+1)],
+     page_offset:1
 
     }:{ ...prevData,
-      [arr]: [...prevData[arr], item]
+      [arr]: [...prevData[arr], item],
+      page_offset:1
     })) 
   }
-
+console.log("abhay")
 
 
   function handleChange(l, r, event) {
@@ -179,11 +196,15 @@ let [response,setResponse] = useState({})
      {l==='filter_price_min'&& r==='filter_price_max' || l==='filter_carat_min' && r==='filter_carat_max'?setData((prevData) => ({
       ...prevData,
       [l]: (event[0]) ,
-      [r]: (event[1])
+      [r]: (event[1]),
+      page_offset:1
+   
      })):setData((prevData) => ({
       ...prevData,
       [l]: parseInt(event[0]) ,
-      [r]: parseInt(event[1])
+      [r]: parseInt(event[1]),
+      page_offset:1
+   
      }))}
     
   }
@@ -191,7 +212,8 @@ let [response,setResponse] = useState({})
   function origin(p){
     setData(prevData => ({
       ...prevData,
-      origin: p
+      origin: p,
+      page_offset:1
       
     }))
   }
@@ -201,16 +223,31 @@ let [response,setResponse] = useState({})
     const { value } = event.target
     setData(prevData => ({
       ...prevData,
-      [p]: (value)
+      [p]: (value),
+      page_offset:1
+    
     }))
 
   }
+
+  let [turnn,setTurnn]= useState(false)
+
+  function turn(){
+    setTurnn(true)
+    console.log("in")
+  }
+  function turnout(){
+    setTurnn(false)
+    console.log("out")
+  }
+    
+  
 
 
   let shape = ['round','princess','cushion','asscher','marquise','oval','radiant','pear','emerald','heart']
   let  s = shape.map(item => {
    return(
-   <div className={` px-[5px] py-[5px]  inline-block text-center flex justify-center items-center cursor-pointer ${Data.shape.includes(item)?"border-black border ":" none"}`}>
+   <div key={item} className={` px-[5px] py-[5px]  inline-block text-center flex justify-center items-center cursor-pointer ${Data.shape.includes(item)?"border-black border ":" none"}`}>
       <Image
           src = {`/images/shapes/${item}.png`}
           width={30}
@@ -222,17 +259,67 @@ let [response,setResponse] = useState({})
      
    ) 
  })
- let k = response.diamonds    
- let sp = (k || []).map(item=>{
-   return (
-     <>
-       {item.image_url&&<div><img src={item.image_url} alt="hh" />{item.carat}carat{item.shape}{item.cut}</div>}
-     </>
-   )
+//  let k = response.diamonds    
+//  let sp = (k || []).map(item=>{
+//    return (
+//      <>
+//        {item.image_url&&<div className=' border-[#dddddd] border hover:border hover:border-[black]'><div className='relative'><img src={item.image_url} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i></div><div className='border-[#dddddd] border'><div>{item.carat} carat {item.shape}</div><div>{item.cut} {item.color} {item.clarity}</div> <div>{item.supplier_net_price}</div></div></div>}
+//      </>
+//    )
     
- })
+//  })
 
- console.log(response)
+//  console.log(response)
+
+//  function fetchData(){
+//    setData(pre=>({
+//      ...pre,
+//      page_offset: pre.page_offset+1
+//    }))
+
+//    return (k || []).map(item=>{
+//      return item.image_url
+//    })
+   
+//  }
+
+//  let fetchData = () => {
+//   console.log("opd")
+
+//     setData(pre=>({
+//       ...pre,
+//       page_offset: pre.page_offset+1
+//     }))
+//     setCheck(1)
+//     console.log("op")
+
+ 
+    
+ 
+  
+    // axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
+    // .then(res => {
+    //   console.log('hello');
+    //   console.log(Data.page_offset)
+    //   if(Data.page_offset==1){
+    //     setResponse(res.data)
+    //   }else{
+    //     setResponse((prevData) => ({...prevData,diamonds:[...prevData.diamonds,...res.data.diamonds]}))
+    //   }
+    // })
+    // .catch(err => console.log(err));
+
+    // (k || []).map(item=>{
+    //   item.image_url
+    // })
+  // a fake async api call like which sends
+  // 20 more records in .5 secs
+  
+// }
+
+
+console.log(Data)
+console.log(Data.page_offset)
 
   return (
     <div className={styles.container}>
@@ -242,6 +329,8 @@ let [response,setResponse] = useState({})
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       </Head>
+
+     
 
       <div>   
      <Image
@@ -312,7 +401,6 @@ let [response,setResponse] = useState({})
      range={{ min: 0 , max: 9 }}
      data={Data} 
      click={handleChange} 
-   
      handleclick={handle}
      left="filter_clarity_min"
      right="filter_clarity_max"
@@ -320,9 +408,6 @@ let [response,setResponse] = useState({})
      kut={9}
      
      />
-
-
-
       </div>
 
    
@@ -413,19 +498,19 @@ let [response,setResponse] = useState({})
 </div>
 
 <div className='max-w-[65%] grid grid-cols-3 gap-4 mx-auto  border-t  border-[#d1d1d1] mb-[15px]'>
-  <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`}  onClick={show} > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i class="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
-   <div className='col-end justify-self-end self-center'><span ><i class="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
+  <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`}  onClick={show} > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i className="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
+   <div className='col-end justify-self-end self-center'><span ><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
    </div>
 
    <div className='max-w-[65%] flex  mx-auto mb-[15px]'>
       <div className='ml-auto'>
-        <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID' /><span className=' px-[5px] inline-block border border-[#ddd]'><i class="fa-solid fa-magnifying-glass"></i></span> 
+        <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID' /><span className=' px-[5px] inline-block border border-[#ddd]'><i className="fa-solid fa-magnifying-glass"></i></span> 
         {/* */}
       </div>
    </div>
 
    <div className='max-w-[65%] flex  mx-auto mb-[50px]'>
-   <div className='mr-auto'>Change: <i class="fa-solid fa-list"></i>  <i class="fa-solid fa-grip"></i></div>
+   <div className='mr-auto'>Change: <i className="fa-solid fa-list"></i>  <i className="fa-solid fa-grip"></i></div>
       <div className='ml-auto'>
       <span className=' px-[5px] inline-block '>Sort By:</span><select className='min-w-[188px] py-[5px]'>
         <option>Price: Low-to-High</option>
@@ -443,11 +528,11 @@ let [response,setResponse] = useState({})
       </div>
    
    </div>
-   <div class="max-w-[65%] mx-auto grid grid-cols-2 gap-4">
-  <div className='flex justify-between'>
-    <button>RECORDS ({response.total_records})</button>
-    <button>RECENTLY VIEWED (1)</button>
-    <button> COMPARE </button>
+   <div className="max-w-[65%] mx-auto grid grid-cols-2 gap-4">
+  <div className='flex '>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[15px]`}>RECORDS ({response.total_records})</button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[15px]`}>RECENTLY VIEWED (1)</button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[15px]`}> COMPARE </button>
   </div>
 
   <div></div>
@@ -455,9 +540,40 @@ let [response,setResponse] = useState({})
 
 
 
-   <div class="grid grid-cols-4 gap-4 w-[65%] mx-auto">
+   {/* <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[65%] mx-auto">
  {sp}
+</div> */}
+<InfiniteScroll
+  dataLength={response.diamonds.length} //This is important field to render the next data
+  next={() => {
+    
+      setData(pre=>({
+        ...pre,
+        page_offset: (pre.page_offset)+1
+      }))
+      setCheck(1)
+    }
+      
+    }
+  hasMore={true}
+  loader={<h4>Loading...</h4>}
+>
+<div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[65%] mx-auto">
+{response.diamonds.map((item) => 
+<div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>
+  {item.image_url?<div className={` ${turnn?"relative  flip-card":"relative"}`}><div className={`${turnn?"flip-card-inner ":"flip-card-inner"}`}><div className={`${turnn?"flip-card-front":"flip-card-front"}`}><img src={item.image_url} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i></div><div className={`${turnn?" flip-card-back ":" flip-card-back"}`}>asdafa</div></div></div>:<div className='relative'><img src={Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i></div>}
+
+  <div className='border-[#dddddd] border'>
+    <div>{item.carat} carat {item.shape}</div>
+    <div>{item.cut} {item.color} {item.clarity}</div> 
+    <div className='flex justify-between' >
+      <div>{item.supplier_net_price}</div>
+      <div className='cursor-pointer' onMouseOver={turn} onMouseOut={turnout}>details+</div>
+    </div>
+    </div>
+    </div>)}
 </div>
+</InfiniteScroll>
    </div>
   )
 }

@@ -9,23 +9,23 @@ function Label(props){
   
 
     let A1 = a1.map(item => {
-        return <div >{item}</div>
+        return <div key={item}>{item}</div>
     })
 
     let A2 = a2.map(item => {
-        return <div className="w-[10%] text-center" >{item}</div>
+        return <div key={item} className="w-[10%] text-center" >{item}</div>
     })
 
     let A3 = a3.map(item => {
-        return <div >{item}</div>
+        return <div key={item}>{item}</div>
     })
 
     let A4 = a4.map(item => {
-        return <div >{item}</div>
+        return <div key={item}>{item}</div>
     })
 
     let A5 = a5.map(item => {
-        return <div >{item}</div>
+        return <div key={item}>{item}</div>
     })
     return(
         <>

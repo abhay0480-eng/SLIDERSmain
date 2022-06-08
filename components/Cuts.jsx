@@ -13,14 +13,14 @@ function Cuts(prop){
     }
    
     let colour = ten.map(te=>{
-      return <span className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[10px]`} style={{left:te}}>|</span>
+      return <span key={te} className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[10px]`} style={{left:te}}>|</span>
 
     })
     let cut1 = three.map(t=>{
-        return  <span className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[12px] left-[30%]`} style={{left:t}}>|</span>
+        return  <span key={t} className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[12px] left-[30%]`} style={{left:t}}>|</span>
       })
       let symm = five.map(t=>{
-        return  <span className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[12px]`} style={{left:t}}>|</span>
+        return  <span key={t} className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[12px]`} style={{left:t}}>|</span>
       })
     return  <>{prop.p===9? colour:prop.p ===4?cut1:prop.p===5?symm :null}</>  
 }
