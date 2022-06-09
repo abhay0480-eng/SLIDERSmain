@@ -108,11 +108,7 @@ let [flag, setflag] = useState(false)
   useEffect(() => {  
   if (typeof window !== "undefined") {
     setData(localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items'))  : d)
-    console.log("off")
-    
- 
-   
-    console.log("offset")
+
   }  setData(prev=>({...prev,page_offset:1})) 
   }, []);
 
@@ -166,7 +162,7 @@ let [response,setResponse] = useState({
     // console.log(response.diamonds[0].id)
   
   useEffect(() => {
-    delete setData["page_offset"]
+   
     if (initialRender.current) {
       initialRender.current = false;
     } else {
@@ -229,9 +225,11 @@ console.log("abhay")
     }))
 
   }
-
+  
   let [turnn,setTurnn]= useState(false)
+  let [tu,setTu]= useState(false)
   let [saveid,setsaveid] = useState()
+  let [gridlist,setGridlist] = useState(true)
 
   function turn(p){
     setTurnn(true)
@@ -242,6 +240,23 @@ console.log("abhay")
     setTurnn(false)
     setsaveid(p)
     console.log(p)
+  }
+  function ul(p){
+    setTu(true)
+    setsaveid(p)
+    console.log(p)
+  }
+  function ulout(p){
+    setTu(false)
+    setsaveid(p)
+    console.log(p)
+  }
+
+  function grid(){
+    setGridlist(true)
+  }
+  function list(){
+    setGridlist(false)
   }
     
   
@@ -263,62 +278,6 @@ console.log("abhay")
    ) 
  })
 console.log(response.diamonds)    
-//  let sp = (k || []).map(item=>{
-//    return (
-//      <>
-//        {item.image_url&&<div className=' border-[#dddddd] border hover:border hover:border-[black]'><div className='relative'><img src={item.image_url} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i></div><div className='border-[#dddddd] border'><div>{item.carat} carat {item.shape}</div><div>{item.cut} {item.color} {item.clarity}</div> <div>{item.supplier_net_price}</div></div></div>}
-//      </>
-//    )
-    
-//  })
-
-//  console.log(response)
-
-//  function fetchData(){
-//    setData(pre=>({
-//      ...pre,
-//      page_offset: pre.page_offset+1
-//    }))
-
-//    return (k || []).map(item=>{
-//      return item.image_url
-//    })
-   
-//  }
-
-//  let fetchData = () => {
-//   console.log("opd")
-
-//     setData(pre=>({
-//       ...pre,
-//       page_offset: pre.page_offset+1
-//     }))
-//     setCheck(1)
-//     console.log("op")
-
- 
-    
- 
-  
-    // axios.post('http://gems.netfillip.org/public/getdiamonds', formData, config)
-    // .then(res => {
-    //   console.log('hello');
-    //   console.log(Data.page_offset)
-    //   if(Data.page_offset==1){
-    //     setResponse(res.data)
-    //   }else{
-    //     setResponse((prevData) => ({...prevData,diamonds:[...prevData.diamonds,...res.data.diamonds]}))
-    //   }
-    // })
-    // .catch(err => console.log(err));
-
-    // (k || []).map(item=>{
-    //   item.image_url
-    // })
-  // a fake async api call like which sends
-  // 20 more records in .5 secs
-  
-// }
 
 
 console.log(Data)
@@ -412,10 +371,6 @@ console.log(Data.page_offset)
      
      />
       </div>
-
-   
-
-
    <div className={`${flag?"grid grid-cols-2 gap-x-20 mx-auto w-[65%] max-h-[500px] overflow-hidden duration-1000 ease-in":"max-h-[0px] grid grid-cols-2 gap-x-20 mx-auto w-[65%] overflow-hidden duration-1000 ease-out"}`}>
    <OptionSlider 
      name="FLUOR" 
@@ -512,8 +467,8 @@ console.log(Data.page_offset)
       </div>
    </div>
 
-   <div className='max-w-[65%] flex  mx-auto mb-[50px]'>
-   <div className='mr-auto'>Change: <i className="fa-solid fa-list"></i>  <i className="fa-solid fa-grip"></i></div>
+   <div className='max-w-[65%] flex  mx-auto mb-[5px]'>
+   <div className='mr-auto'>Change: <i className="fa-solid fa-list cursor-pointer" onClick={list}></i>  <i className="fa-solid fa-grip cursor-pointer" onClick={grid}></i></div>
       <div className='ml-auto'>
       <span className=' px-[5px] inline-block '>Sort By:</span><select className='min-w-[188px] py-[5px]'>
         <option>Price: Low-to-High</option>
@@ -533,9 +488,9 @@ console.log(Data.page_offset)
    </div>
    <div className="max-w-[65%] mx-auto grid grid-cols-2 gap-4">
   <div className='flex '>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[15px]`}>RECORDS ({response.total_records})</button>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[15px]`}>RECENTLY VIEWED (1)</button>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[15px]`}> COMPARE </button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECORDS ({response.total_records})</button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECENTLY VIEWED (1)</button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}> COMPARE </button>
   </div>
 
   <div></div>
@@ -546,7 +501,7 @@ console.log(Data.page_offset)
    {/* <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[65%] mx-auto">
  {sp}
 </div> */}
-<InfiniteScroll
+{gridlist&&<InfiniteScroll
   dataLength={response.diamonds.length} //This is important field to render the next data
   next={() => {
     
@@ -571,30 +526,94 @@ console.log(Data.page_offset)
         <img src={item.image_url} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
       </div>
       <div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb]":" flip-card-back bg-[#ebebeb]"}`}>
-        asdafa
+      <p className='mb-[5px]'>SKU: {item.stock_num}</p>
+      <p className='mb-[5px]'>Report: {item.lab}</p>
+      <p className='mb-[5px]'>Table: {item.table_percent}</p>
+      <p className='mb-[5px]'>Depth: {item.depth}</p>
+      <p className='mb-[5px]'>Symmetry: {item.symmetry==="VG"?"Very Good":item.symmetry==="EX"?"Exellent":item.symmetry==="GD"?"Good":item.symmetry==="F"?"Fair":"Poor"}</p>
+      <p className='mb-[5px]'>Polish: {item.polish==="VG"?"Very Good":item.polish==="EX"?"Exellent":item.polish==="GD"?"Good":item.polish==="F"?"Fair":"Poor"}</p>
+      <p >Fluor: {item.fluorescence==="STG"?"Strong":item.fluorescence==="MED"?"Medium":item.fluorescence==="FNT"?"Faint":"None"}</p>
       </div>
     </div>
-  </div>:<div className={` ${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
+  </div>:<div className={`${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
     <img src={Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
     </div><div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
-        asdafa
+    <p className='mb-[5px]'>SKU: {item.stock_num}</p>
+      <p className='mb-[5px]'>Report: {item.lab}</p>
+      <p className='mb-[5px]'>Table: {item.table_percent}</p>
+      <p className='mb-[5px]'>Depth: {item.depth}</p>
+      <p className='mb-[5px]'>Symmetry: {item.symmetry==="VG"?"Very Good":item.symmetry==="EX"?"Exellent":item.symmetry==="GD"?"Good":item.symmetry==="F"?"Fair":"Poor"}</p>
+      <p className='mb-[5px]'>Polish: {item.polish==="VG"?"Very Good":item.polish==="EX"?"Exellent":item.polish==="GD"?"Good":item.polish==="F"?"Fair":"Poor"}</p>
+      <p className='mb-[5px]'>Polish: {item.polish}</p>
+      <p >Fluor: {item.fluorescence==="STG"?"Strong":item.fluorescence==="MED"?"Medium":item.fluorescence==="FNT"?"Faint":"None"}</p>
       </div></div></div>}
 
-  {/* <img src={Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className='h-[245px] w-[100%] object-cover' /> */}
-
-  <div className='border-[#dddddd] border'>
-    <div>{item.carat} carat {item.shape}</div>
-    <div>{item.cut} {item.color} {item.clarity}</div> 
+  
+  <div className='border-[#dddddd] p-[10px] border' onMouseOver={()=>ul(item.stock_num)} onMouseOut={ ()=>ulout(item.stock_num)}>
+    <div className={`${tu && item.stock_num === saveid?"underline":"no-underline"}`}>{item.carat} carat {item.shape}</div>
+    <div>{item.cut==="VG"?"Very Good":item.cut==="EX"?"Exellent":item.cut==="GD"?"Good":item.cut==="F"?"Fair":"Poor"} | {item.color} | {item.clarity}</div> 
     <div className='flex justify-between' >
-      <div>{item.supplier_net_price}</div>
-      <div className='cursor-pointer' onMouseOver={()=>turn(item.stock_num)} onMouseOut={ ()=>turnout(item.stock_num)}>details{turnn && item.stock_num === saveid?"-":"+"}</div>
+      <div>£ {parseInt(item.fame_price) } (ex VAT)</div>
+      <div className='cursor-pointer' onMouseOver={()=>turn(item.stock_num)} onMouseOut={ ()=>turnout(item.stock_num)}>details {turnn && item.stock_num === saveid?"-":"+"}</div>
     </div>
     </div>
     </div>)}
 </div>
+</InfiniteScroll>}
+{!gridlist&&
+  <div className="grid grid-cols-4  w-[65%] mx-auto border border-[#ddd] " >
+  <div className='col-span-3'>
+    <div className='bg-[black] w-[100%] flex justify-around text-[white] py-[10px] px-[10px]'>
+        <p>Compare</p>
+        <p>Shape</p>
+        <p>Carat</p>
+        <p>Color</p>
+        <p>Clarity</p>
+        <p>Cut</p>
+        <p>Report</p>
+        <p>Price</p>
+        <p>Details</p>
+    
+    </div>
+    <InfiniteScroll
+  dataLength={response.diamonds.length} //This is important field to render the next data
+  next={() => {
+    
+      setData(pre=>({
+        ...pre,
+        page_offset: (pre.page_offset)+1
+      }))
+      setCheck(1)
+    }
+      
+    }
+  hasMore={true}
+  loader={<h4>Loading...</h4>}
+  scrollableTarget="scrollableDiv"
+>
+{response.diamonds.map((item) => 
+    <div className=' w-[100%] flex justify-around  py-[10px] px-[10px] text-center' >
+        <p className='text-center'><i className="fa-regular fa-heart"></i></p>
+        <p>{item.shape}</p>
+        <p>{item.carat}</p>
+        <p>{item.color}</p>
+        <p>{item.clarity}</p>
+        <p>{item.cut}</p>
+        <p>{item.lab}</p>
+        <p>£ {parseInt(item.fame_price) }</p>
+        <p>view</p>
+    </div>)}
 </InfiniteScroll>
+    
+  </div>
+
+  <div className='bg-[black] w-[100%] flex justify-center text-[white] py-[10px] px-[10px]'>
+    <p className='text-center'>DIAMOND INFORMATION</p>
+  </div>
+</div>
+}
    </div>
   )
 }
