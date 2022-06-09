@@ -166,7 +166,7 @@ let [response,setResponse] = useState({
     // console.log(response.diamonds[0].id)
   
   useEffect(() => {
-    
+    delete setData["page_offset"]
     if (initialRender.current) {
       initialRender.current = false;
     } else {
@@ -231,14 +231,17 @@ console.log("abhay")
   }
 
   let [turnn,setTurnn]= useState(false)
+  let [saveid,setsaveid] = useState()
 
-  function turn(){
+  function turn(p){
     setTurnn(true)
-    console.log("in")
+    setsaveid(p)
+    console.log(p)
   }
-  function turnout(){
+  function turnout(p){
     setTurnn(false)
-    console.log("out")
+    setsaveid(p)
+    console.log(p)
   }
     
   
@@ -259,7 +262,7 @@ console.log("abhay")
      
    ) 
  })
-//  let k = response.diamonds    
+console.log(response.diamonds)    
 //  let sp = (k || []).map(item=>{
 //    return (
 //      <>
@@ -561,14 +564,32 @@ console.log(Data.page_offset)
 <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[65%] mx-auto">
 {response.diamonds.map((item) => 
 <div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>
-  {item.image_url?<div className={` ${turnn?"relative  flip-card":"relative"}`}><div className={`${turnn?"flip-card-inner ":"flip-card-inner"}`}><div className={`${turnn?"flip-card-front":"flip-card-front"}`}><img src={item.image_url} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i></div><div className={`${turnn?" flip-card-back ":" flip-card-back"}`}>asdafa</div></div></div>:<div className='relative'><img src={Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i></div>}
+  {item.image_url?
+  <div className={` ${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
+    <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
+      <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
+        <img src={item.image_url} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
+      </div>
+      <div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb]":" flip-card-back bg-[#ebebeb]"}`}>
+        asdafa
+      </div>
+    </div>
+  </div>:<div className={` ${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
+         <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
+         <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
+    <img src={Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
+    </div><div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
+        asdafa
+      </div></div></div>}
+
+  {/* <img src={Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className='h-[245px] w-[100%] object-cover' /> */}
 
   <div className='border-[#dddddd] border'>
     <div>{item.carat} carat {item.shape}</div>
     <div>{item.cut} {item.color} {item.clarity}</div> 
     <div className='flex justify-between' >
       <div>{item.supplier_net_price}</div>
-      <div className='cursor-pointer' onMouseOver={turn} onMouseOut={turnout}>details+</div>
+      <div className='cursor-pointer' onMouseOver={()=>turn(item.stock_num)} onMouseOut={ ()=>turnout(item.stock_num)}>details{turnn && item.stock_num === saveid?"-":"+"}</div>
     </div>
     </div>
     </div>)}
