@@ -204,7 +204,7 @@ console.log("abhay")
      }))}
     
   }
-
+let i=0
   function origin(p){
     setData(prevData => ({
       ...prevData,
@@ -258,7 +258,32 @@ console.log("abhay")
   function list(){
     setGridlist(false)
   }
-    
+
+//   function loader(){
+//     for(let i=0; i<20; i++){
+// return(
+  
+// )
+//     }
+//   }
+let l =[]
+
+
+  for(let i=0; i<20; i++){
+    l.push(<div className='animate-pulse border-[#dddddd] border mt-[20px] '>
+    <div className='h-[200px] bg-slate-200 rounded mb-[20px] '></div>
+    <div className='px-[15px]'>
+      <div className='h-[15px] w-[40%] bg-slate-200 rounded mb-[10px]'></div>
+      <div className='h-[15px] w-[50%] bg-slate-200 rounded mb-[10px]'></div>
+      <div className='flex justify-between'>
+        <div className='h-[15px] w-[40%] bg-slate-200 rounded mb-[10px]'></div>
+        <div className='h-[15px] w-[20%] bg-slate-200 rounded mb-[10px]'></div>
+      </div>
+    </div> 
+    </div>)
+  }
+  
+
   
 
 
@@ -302,8 +327,8 @@ console.log(Data.page_offset)
       height={100}
     />
    </div>
-
-   <div className="grid grid-cols-2 gap-x-20 w-[65%] mx-auto border-b pb-[20px] border-[#d1d1d1]">
+   <div class="container max-w-[1130px] mx-auto ">
+   <div className="grid grid-cols-2 gap-x-20 w-[100%]  border-b pb-[20px] border-[#d1d1d1]">
         <div className='flex items-center mt-[30px] w-[100%]'>
          <div className='w-[20%]'>SHAPE</div>
          <div className='flex w-[100%] justify-between items-center '>{s}</div> 
@@ -371,7 +396,8 @@ console.log(Data.page_offset)
      
      />
       </div>
-   <div className={`${flag?"grid grid-cols-2 gap-x-20 mx-auto w-[65%] max-h-[500px] overflow-hidden duration-1000 ease-in":"max-h-[0px] grid grid-cols-2 gap-x-20 mx-auto w-[65%] overflow-hidden duration-1000 ease-out"}`}>
+
+      <div className={`${flag?"grid grid-cols-2 gap-x-20 w-[100%] max-h-[500px] overflow-hidden duration-1000 ease-in":"max-h-[0px] grid grid-cols-2 gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
    <OptionSlider 
      name="FLUOR" 
      range={{ min: 0 , max: 4 }}
@@ -455,19 +481,20 @@ console.log(Data.page_offset)
      
 </div>
 
-<div className='max-w-[65%] grid grid-cols-3 gap-4 mx-auto  border-t  border-[#d1d1d1] mb-[15px]'>
+<div className='max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
   <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`}  onClick={show} > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i className="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
    <div className='col-end justify-self-end self-center'><span ><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
    </div>
 
-   <div className='max-w-[65%] flex  mx-auto mb-[15px]'>
+   <div className='max-w-[100%] flex  mb-[15px]'>
       <div className='ml-auto'>
         <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID' /><span className=' px-[5px] inline-block border border-[#ddd]'><i className="fa-solid fa-magnifying-glass"></i></span> 
         {/* */}
       </div>
    </div>
 
-   <div className='max-w-[65%] flex  mx-auto mb-[5px]'>
+
+   <div className='max-w-[100%] flex  mb-[5px]'>
    <div className='mr-auto'>Change: <i className="fa-solid fa-list cursor-pointer" onClick={list}></i>  <i className="fa-solid fa-grip cursor-pointer" onClick={grid}></i></div>
       <div className='ml-auto'>
       <span className=' px-[5px] inline-block '>Sort By:</span><select className='min-w-[188px] py-[5px]'>
@@ -486,7 +513,8 @@ console.log(Data.page_offset)
       </div>
    
    </div>
-   <div className="max-w-[65%] mx-auto grid grid-cols-2 gap-4">
+
+   <div className="max-w-[100%]  grid grid-cols-2 gap-4">
   <div className='flex '>
     <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECORDS ({response.total_records})</button>
     <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECENTLY VIEWED (1)</button>
@@ -496,11 +524,6 @@ console.log(Data.page_offset)
   <div></div>
 </div>
 
-
-
-   {/* <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[65%] mx-auto">
- {sp}
-</div> */}
 {gridlist&&<InfiniteScroll
   dataLength={response.diamonds.length} //This is important field to render the next data
   next={() => {
@@ -514,9 +537,19 @@ console.log(Data.page_offset)
       
     }
   hasMore={true}
-  loader={<h4>Loading...</h4>}
+  loader={ 
+    <div class="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%]  mb-[100px]">
+    { l.map(item =>item)}
+
+
+</div>
+    
+       
+      
+   
+  }
 >
-<div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[65%] mx-auto">
+<div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%] ">
 {response.diamonds.map((item) => 
 <div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>
   {item.image_url?
@@ -562,10 +595,12 @@ console.log(Data.page_offset)
     </div>)}
 </div>
 </InfiniteScroll>}
+
+
 {!gridlist&&
-  <div className="grid grid-cols-4  w-[65%] mx-auto border border-[#ddd] " >
-  <div className='col-span-3'>
-    <div className='bg-[black] w-[100%] flex justify-around text-[white] py-[10px] px-[10px]'>
+  <div className="grid grid-cols-4  w-[100%]  border border-[#ddd] pb-[20px] mb-[100px]" >
+  <div className='col-span-3' id="scrollableDiv" style={{ height: 700, overflow: "auto" }}>
+    <div className='bg-[black] w-[100%] flex justify-around text-[white] py-[10px] px-[10px] sticky top-0 '>
         <p>Compare</p>
         <p>Shape</p>
         <p>Carat</p>
@@ -605,15 +640,71 @@ console.log(Data.page_offset)
         <p>£ {parseInt(item.fame_price) }</p>
         <p>view</p>
     </div>)}
-</InfiniteScroll>
-    
-  </div>
+</InfiniteScroll>    
+</div>
 
-  <div className='bg-[black] w-[100%] flex justify-center text-[white] py-[10px] px-[10px]'>
+<div className='col-span-1'>
+<div className='bg-[black] w-[100%] flex justify-center text-[white] py-[10px] px-[10px]'>
     <p className='text-center'>DIAMOND INFORMATION</p>
   </div>
+  <div>
+   <iframe  src="https://loupe360.com/diamond/6432030545/video/rsp/autoplay/autoplay" width="100%" height="300px">
+   </iframe>
+  </div>
+  <div className='text-center mt-[15px] px-[10px]'>
+    <button className='border border-[black] px-[30px] py-[5px] w-[100%]'>VIEW DIAMOND</button>
+  </div>
+  <div class="grid grid-cols-2 gap-4 p-[15px] text-[12px]">
+  <div>
+    <div>STOCK NO</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>PRICE</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>SHAPE</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>CUT</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>CARAT WEIGHT</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>CLARITY</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>COLOR</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>MEASUREMENTS</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>REPORT</div>
+    <div>POPOP</div>
+  </div>
+  <div>
+    <div>SYMMETRY</div>
+    <div>POPOP</div>
+  </div>
+</div>
+</div>
+  
 </div>
 }
+
+{/* main conatiner ends */}
+</div>
+
+
    </div>
   )
 }
