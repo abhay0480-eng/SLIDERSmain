@@ -112,7 +112,7 @@ let [flag, setflag] = useState(false)
   }  setData(prev=>({...prev,page_offset:1})) 
   }, []);
 
-  
+ 
 
 
   let formData = new FormData();    //formdata object
@@ -230,6 +230,12 @@ let i=0
   let [tu,setTu]= useState(false)
   let [saveid,setsaveid] = useState()
   let [gridlist,setGridlist] = useState(true)
+  let [sideItems,setSideItems] = useState(false)
+
+  function sideItem(p){
+      setSideItems(true)
+      setsaveid(p)
+  }
 
   function turn(p){
     setTurnn(true)
@@ -259,14 +265,9 @@ let i=0
     setGridlist(false)
   }
 
-//   function loader(){
-//     for(let i=0; i<20; i++){
-// return(
-  
-// )
-//     }
-//   }
+
 let l =[]
+let listLoader = []
 
 
   for(let i=0; i<20; i++){
@@ -280,6 +281,22 @@ let l =[]
         <div className='h-[15px] w-[20%] bg-slate-200 rounded mb-[10px]'></div>
       </div>
     </div> 
+    </div>)
+  }
+
+  for(let i=0; i<20; i++){
+    listLoader.push(<div className='animate-pulse w-[100%] grid grid-cols-9 justify-items-center py-[10px] px-[10px]   '>
+      <p className='h-[15px] w-[20%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[80%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[20%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[20%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[60%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[40%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[60%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[50%] bg-slate-200 rounded mb-[10px]'></p>
+      <p className='h-[15px] w-[60%] bg-slate-200 rounded mb-[10px]'></p>
+      
+        
     </div>)
   }
   
@@ -403,7 +420,6 @@ console.log(Data.page_offset)
      range={{ min: 0 , max: 4 }}
      data={Data} 
      click={handleChange} 
-   
      handleclick={handle}
      left="filter_fluorescence_min"
      right="filter_fluorescence_max"
@@ -518,7 +534,7 @@ console.log(Data.page_offset)
   <div className='flex '>
     <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECORDS ({response.total_records})</button>
     <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECENTLY VIEWED (1)</button>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}> COMPARE </button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} onClick={grid}> COMPARE </button>
   </div>
 
   <div></div>
@@ -540,23 +556,19 @@ console.log(Data.page_offset)
   loader={ 
     <div class="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%]  mb-[100px]">
     { l.map(item =>item)}
-
-
 </div>
-    
-       
-      
-   
   }
 >
 <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%] ">
 {response.diamonds.map((item) => 
 <div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>
-  {item.image_url?
+  { item.image_url?
   <div className={` ${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
     <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
       <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
-        <img src={item.image_url} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
+        <Image src={`/api/imagefetcher?url=${encodeURIComponent(
+            item.image_url
+          )}`} alt="hh"  className=' object-cover'  width="100%" height="100%" layout="responsive" objectFit="cover"/><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
       </div>
       <div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb]":" flip-card-back bg-[#ebebeb]"}`}>
       <p className='mb-[5px]'>SKU: {item.stock_num}</p>
@@ -571,9 +583,9 @@ console.log(Data.page_offset)
   </div>:<div className={`${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
-    <img src={Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className='h-[245px] w-[100%] object-cover' /><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
+    <Image src={ Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" objectFit="cover"/><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
     </div><div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
-    <p className='mb-[5px]'>SKU: {item.stock_num}</p>
+      <p className='mb-[5px]'>SKU: {item.stock_num}</p>
       <p className='mb-[5px]'>Report: {item.lab}</p>
       <p className='mb-[5px]'>Table: {item.table_percent}</p>
       <p className='mb-[5px]'>Depth: {item.depth}</p>
@@ -600,7 +612,7 @@ console.log(Data.page_offset)
 {!gridlist&&
   <div className="grid grid-cols-4  w-[100%]  border border-[#ddd] pb-[20px] mb-[100px]" >
   <div className='col-span-3' id="scrollableDiv" style={{ height: 700, overflow: "auto" }}>
-    <div className='bg-[black] w-[100%] flex justify-around text-[white] py-[10px] px-[10px] sticky top-0 '>
+    <div className='bg-[black] justify-items-center w-[100%] grid grid-cols-9 text-[white] py-[10px] px-[10px] sticky top-0 '>
         <p>Compare</p>
         <p>Shape</p>
         <p>Carat</p>
@@ -610,7 +622,6 @@ console.log(Data.page_offset)
         <p>Report</p>
         <p>Price</p>
         <p>Details</p>
-    
     </div>
     <InfiniteScroll
   dataLength={response.diamonds.length} //This is important field to render the next data
@@ -622,15 +633,16 @@ console.log(Data.page_offset)
       }))
       setCheck(1)
     }
-      
     }
   hasMore={true}
-  loader={<h4>Loading...</h4>}
+  loader={
+  listLoader.map(item =>item)
+}
   scrollableTarget="scrollableDiv"
 >
 {response.diamonds.map((item) => 
-    <div className=' w-[100%] flex justify-around  py-[10px] px-[10px] text-center' >
-        <p className='text-center'><i className="fa-regular fa-heart"></i></p>
+    <div className=' w-[100%] grid grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer' onMouseEnter={()=>sideItem(item.stock_num)} >
+        <p ><i className="fa-regular fa-heart"></i></p>
         <p>{item.shape}</p>
         <p>{item.carat}</p>
         <p>{item.color}</p>
@@ -643,12 +655,14 @@ console.log(Data.page_offset)
 </InfiniteScroll>    
 </div>
 
+
+{response.diamonds.map((item) => sideItem && item.stock_num === saveid &&
 <div className='col-span-1'>
 <div className='bg-[black] w-[100%] flex justify-center text-[white] py-[10px] px-[10px]'>
     <p className='text-center'>DIAMOND INFORMATION</p>
   </div>
   <div>
-   <iframe  src="https://loupe360.com/diamond/6432030545/video/rsp/autoplay/autoplay" width="100%" height="300px">
+   <iframe  src={ sideItems && item.stock_num === saveid ? item.video_url:null} width="100%" height="300px">
    </iframe>
   </div>
   <div className='text-center mt-[15px] px-[10px]'>
@@ -657,50 +671,52 @@ console.log(Data.page_offset)
   <div class="grid grid-cols-2 gap-4 p-[15px] text-[12px]">
   <div>
     <div>STOCK NO</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.stock_num:null}</div>
   </div>
   <div>
     <div>PRICE</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.fame_price:null}</div>
   </div>
   <div>
     <div>SHAPE</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.shape:null}</div>
   </div>
   <div>
     <div>CUT</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.cut:null}</div>
   </div>
   <div>
     <div>CARAT WEIGHT</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.carat:null}</div>
   </div>
   <div>
     <div>CLARITY</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.clarity:null}</div>
   </div>
   <div>
     <div>COLOR</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.color:null}</div>
   </div>
   <div>
     <div>MEASUREMENTS</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.fame_price:null}</div>
   </div>
   <div>
     <div>REPORT</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.fame_price:null}</div>
   </div>
   <div>
     <div>SYMMETRY</div>
-    <div>POPOP</div>
+    <div>{ sideItems && item.stock_num === saveid ? item.symmetry:null}</div>
   </div>
 </div>
-</div>
+</div>)}
   
 </div>
 }
 
+
+{gridlist&& <div>compare</div>}
 {/* main conatiner ends */}
 </div>
 
