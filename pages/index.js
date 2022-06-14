@@ -94,6 +94,9 @@ export default function Home({ ndata }) {
     sorting_order: 'ASC',
     sort_by: 'fame_price'
   }
+
+
+  
  
 
 let [flag, setflag] = useState(false)
@@ -159,7 +162,6 @@ let [response,setResponse] = useState({
       }
     }, [Data])
 
-    // console.log(response.diamonds[0].id)
   
   useEffect(() => {
    
@@ -184,7 +186,7 @@ let [response,setResponse] = useState({
       page_offset:1
     })) 
   }
-console.log("abhay")
+
 
 
   function handleChange(l, r, event) {
@@ -231,6 +233,16 @@ let i=0
   let [saveid,setsaveid] = useState()
   let [gridlist,setGridlist] = useState(true)
   let [sideItems,setSideItems] = useState(false)
+  let [comparelist,setComparelist] = useState(false)
+  let [heartCount,setheartCount] = useState(0)
+  let [compareItems,setcompareItems] = useState([])
+
+  function compare(){
+    setComparelist(true)
+  }
+  function records(){
+    setComparelist(false)
+  }
 
   function sideItem(p){
       setSideItems(true)
@@ -240,22 +252,22 @@ let i=0
   function turn(p){
     setTurnn(true)
     setsaveid(p)
-    console.log(p)
+  
   }
   function turnout(p){
     setTurnn(false)
     setsaveid(p)
-    console.log(p)
+  
   }
   function ul(p){
     setTu(true)
     setsaveid(p)
-    console.log(p)
+  
   }
   function ulout(p){
     setTu(false)
     setsaveid(p)
-    console.log(p)
+    
   }
 
   function grid(){
@@ -265,6 +277,20 @@ let i=0
     setGridlist(false)
   }
 
+  function comparehearts(p){
+    
+    if(compareItems.includes(p)){
+      const index = compareItems.indexOf(p);
+      setheartCount(prev=> prev-1)
+      compareItems.splice(index, 1);
+    }else{
+      setheartCount(prev=> prev+1)
+      setcompareItems(prev=>[...prev,p])
+  
+    }
+
+  }
+  console.log(response.diamonds)  
 
 let l =[]
 let listLoader = []
@@ -319,11 +345,36 @@ let listLoader = []
      
    ) 
  })
-console.log(response.diamonds)    
 
+ function reset(){
+  localStorage.clear();
+  window.location.reload();
+ }
 
-console.log(Data)
-console.log(Data.page_offset)
+//  function lowpricesort(){
+//   console.log("a")
+//   response.diamonds.sort(function(a, b) {
+//     return b.fame_price - a.fame_price
+//   });
+//   // console.log(response.diamonds.sort((firstItem, secondItem) => firstItem.fame_price - secondItem.fame_price))
+//   // console.log("a")
+// }
+
+const [search, setSearch] = useState('')
+const filteredDiamonds = !search? response.diamonds  : 
+response.diamonds.filter(item => (item.id.
+  toString().includes(search)) || (item.certificate_num.
+    toLowerCase().includes(search.toLowerCase())))
+
+   
+     const sortDiamonds = response.diamonds.sort((a, b) => b.fame_price - a.fame_price)
+console.log("sort")
+            console.log(sortDiamonds)
+            console.log("sort")
+        
+          
+          
+
 
   return (
     <div className={styles.container}>
@@ -344,7 +395,7 @@ console.log(Data.page_offset)
       height={100}
     />
    </div>
-   <div class="container max-w-[1130px] mx-auto ">
+   {!comparelist && <div className="container max-w-[1130px] mx-auto ">
    <div className="grid grid-cols-2 gap-x-20 w-[100%]  border-b pb-[20px] border-[#d1d1d1]">
         <div className='flex items-center mt-[30px] w-[100%]'>
          <div className='w-[20%]'>SHAPE</div>
@@ -499,12 +550,15 @@ console.log(Data.page_offset)
 
 <div className='max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
   <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`}  onClick={show} > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i className="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
-   <div className='col-end justify-self-end self-center'><span ><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
+   <div className='col-end justify-self-end self-center'><span className='cursor-pointer' onClick={reset}><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
    </div>
 
    <div className='max-w-[100%] flex  mb-[15px]'>
       <div className='ml-auto'>
-        <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID' /><span className=' px-[5px] inline-block border border-[#ddd]'><i className="fa-solid fa-magnifying-glass"></i></span> 
+        <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID'  
+                  
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}/><span className=' px-[5px] inline-block border border-[#ddd]'><i className="fa-solid fa-magnifying-glass"></i></span> 
         {/* */}
       </div>
    </div>
@@ -513,17 +567,17 @@ console.log(Data.page_offset)
    <div className='max-w-[100%] flex  mb-[5px]'>
    <div className='mr-auto'>Change: <i className="fa-solid fa-list cursor-pointer" onClick={list}></i>  <i className="fa-solid fa-grip cursor-pointer" onClick={grid}></i></div>
       <div className='ml-auto'>
-      <span className=' px-[5px] inline-block '>Sort By:</span><select className='min-w-[188px] py-[5px]'>
-        <option>Price: Low-to-High</option>
-        <option>Price: High-to-Low</option>
-        <option>Carat: Low-to-High</option>
-        <option>Carat: High-to-Low</option>
-        <option>Color: Low-to-High</option>
-        <option>Color: High-to-Low</option>
-        <option>Clarity: Low-to-High</option>
-        <option>Clarity: High-to-Low</option>
-        <option>Cut: Low-to-High</option>
-        <option>Cut: High-to-Low</option>
+      <span className=' px-[5px] inline-block '>Sort By:</span><select value={selectedOptions} onChange={handleSelectChange} className='min-w-[188px] py-[5px]'>
+        <option  value="Price:Low-to-High">Price: Low-to-High</option>
+        <option value="Price:High-to-Low">Price: High-to-Low</option>
+        <option value="Carat:Low-to-High">Carat: Low-to-High</option>
+        <option value="Carat:High-to-Low">Carat: High-to-Low</option>
+        <option value="Color:Low-to-High">Color: Low-to-High</option>
+        <option value="Color:High-to-Low">Color: High-to-Low</option>
+        <option value="Clarity:Low-to-High">Clarity: Low-to-High</option>
+        <option value="Clarity:High-to-Low">Clarity: High-to-Low</option>
+        <option value="Cut:Low-to-High">Cut: Low-to-High</option>
+        <option value="Cut:High-to-Low">Cut: High-to-Low</option>
         </select>
         {/* */}
       </div>
@@ -532,15 +586,15 @@ console.log(Data.page_offset)
 
    <div className="max-w-[100%]  grid grid-cols-2 gap-4">
   <div className='flex '>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECORDS ({response.total_records})</button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
     <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECENTLY VIEWED (1)</button>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} onClick={grid}> COMPARE </button>
+    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} onClick={compare}> COMPARE ({heartCount})</button>
   </div>
 
   <div></div>
 </div>
 
-{gridlist&&<InfiniteScroll
+ <div>{gridlist&&<InfiniteScroll
   dataLength={response.diamonds.length} //This is important field to render the next data
   next={() => {
     
@@ -554,13 +608,13 @@ console.log(Data.page_offset)
     }
   hasMore={true}
   loader={ 
-    <div class="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%]  mb-[100px]">
+    <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%]  mb-[100px]">
     { l.map(item =>item)}
 </div>
   }
 >
 <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%] ">
-{response.diamonds.map((item) => 
+{filteredDiamonds.map((item) => 
 <div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>
   { item.image_url?
   <div className={` ${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
@@ -568,7 +622,7 @@ console.log(Data.page_offset)
       <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
         <Image src={`/api/imagefetcher?url=${encodeURIComponent(
             item.image_url
-          )}`} alt="hh"  className=' object-cover'  width="100%" height="100%" layout="responsive" objectFit="cover"/><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
+          )}`} alt="hh"  className=' object-cover'  width="100%" height="100%" layout="responsive" objectFit="cover"/>{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>:<i className="fa-solid fa-heart absolute top-[5px] right-[5px]" onClick={()=>comparehearts(item.stock_num)}></i>}
       </div>
       <div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb]":" flip-card-back bg-[#ebebeb]"}`}>
       <p className='mb-[5px]'>SKU: {item.stock_num}</p>
@@ -583,7 +637,7 @@ console.log(Data.page_offset)
   </div>:<div className={`${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
-    <Image src={ Data.shape.includes("round")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":Data.shape.includes("princess")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":Data.shape.includes("cushion")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":Data.shape.includes("asscher")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":Data.shape.includes("marquise")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":Data.shape.includes("oval")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":Data.shape.includes("radiant")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":Data.shape.includes("pear")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":Data.shape.includes("emerald")?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" objectFit="cover"/><i className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>
+    <Image src={ item.shape==="ROUND"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":item.shape==="PRINCESS"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":item.shape==="CUSHION"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":item.shape==="ASSCHER"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":item.shape==="MARQUISE"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":item.shape==="OVAL"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":item.shape==="RADIANT"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":item.shape==="PEAR"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":item.shape==="EMERALD"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" objectFit="cover"/>{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>:<i className="fa-solid fa-heart absolute top-[5px] right-[5px]" onClick={()=>comparehearts(item.stock_num)}></i>}
     </div><div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
       <p className='mb-[5px]'>SKU: {item.stock_num}</p>
       <p className='mb-[5px]'>Report: {item.lab}</p>
@@ -640,9 +694,9 @@ console.log(Data.page_offset)
 }
   scrollableTarget="scrollableDiv"
 >
-{response.diamonds.map((item) => 
+{filteredDiamonds.map((item) => 
     <div className=' w-[100%] grid grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer' onMouseEnter={()=>sideItem(item.stock_num)} >
-        <p ><i className="fa-regular fa-heart"></i></p>
+        <p >{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart"></i>:<i className="fa-solid fa-heart" onClick={()=>comparehearts(item.stock_num)}></i>}</p>
         <p>{item.shape}</p>
         <p>{item.carat}</p>
         <p>{item.color}</p>
@@ -668,7 +722,7 @@ console.log(Data.page_offset)
   <div className='text-center mt-[15px] px-[10px]'>
     <button className='border border-[black] px-[30px] py-[5px] w-[100%]'>VIEW DIAMOND</button>
   </div>
-  <div class="grid grid-cols-2 gap-4 p-[15px] text-[12px]">
+  <div className="grid grid-cols-2 gap-4 p-[15px] text-[12px]">
   <div>
     <div>STOCK NO</div>
     <div>{ sideItems && item.stock_num === saveid ? item.stock_num:null}</div>
@@ -713,12 +767,60 @@ console.log(Data.page_offset)
 </div>)}
   
 </div>
-}
+}</div>
 
 
-{gridlist&& <div>compare</div>}
+
 {/* main conatiner ends */}
+</div>}
+{comparelist && 
+  <div className="container max-w-[1130px] mx-auto ">
+    <div className='cursor-pointer mb-[50px]' onClick={records}>back to diamonds</div>
+    <h1 className='text-[2em] text-center mb-[50px]'>Compare Diamond()</h1>
+    <div className='border border-[black] w-[100%]'>
+    <div className="grid grid-cols-6 gap-4">
+    <div className="grid grid-rows-15 col-span-1 ">
+    <div className='border border-[black] h-[50px]'></div>
+    <div className='border border-[black] h-[100px]'>Image</div>
+    <div className='border border-[black]'>View Details</div>
+    <div className='border border-[black]'>Price</div>
+    <div className='border border-[black]'>Shape</div>
+    <div className='border border-[black]'>Carat Weight</div>
+    <div className='border border-[black]'>Color</div>
+    <div className='border border-[black]'>Clarity</div>
+    <div className='border border-[black]'>Cut</div>
+    <div className='border border-[black]'>Polish</div>
+    <div className='border border-[black]'>Symmetry</div>
+    <div className='border border-[black]'>Fluorescence</div>
+    <div className='border border-[black]'>Measurements</div>
+    <div className='border border-[black]'>Depth %</div>
+    <div className='border border-[black]'>Table %</div>
+  </div>
+
+  {response.diamonds.map((item) => compareItems.includes(item.stock_num)&& <div>
+    <div onClick={()=>comparehearts(item.stock_num)} className="cursor-pointer">remove</div>
+    <div><Image src={`/api/imagefetcher?url=${encodeURIComponent(
+            item.image_url
+          )}`} alt="hh"  className=' object-cover'  width="100%" height="100%" layout="responsive" objectFit="cover"/></div>
+    <div>{item.id}</div>
+    <div>£ {parseInt(item.fame_price) }</div>
+    <div><button>add to</button></div>
+    <div>{item.shape}</div>
+    <div>{item.carat}</div>
+    <div>{item.color}</div>
+    <div>{item.clarity}</div>
+    <div>{item.cut}</div>
+    <div>{item.polish}</div>
+    <div>{item.fluorescence}</div>
+    <div>{item.width}</div>
+    <div>{item.depth_percent}</div>
+    <div>{item.table_percent}</div>
+  </div>)}
 </div>
+      
+    
+    </div>
+  </div>}
 
 
    </div>
