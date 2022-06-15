@@ -95,6 +95,88 @@ export default function Home({ ndata }) {
     sort_by: 'fame_price'
   }
 
+  let names = {
+
+Round: 'ROUND',
+B:'ROUND',
+BR:'ROUND',
+RD:'ROUND',
+RB:'ROUND',
+RBC:'ROUND',
+["Round Brilliant"]:'ROUND',
+RND:'ROUND',
+ROUND:'ROUND',
+Princess:'PRINCESS',
+PRN:'PRINCESS',
+PRIN:'PRINCESS',
+PR:'PRINCESS',
+PN:'PRINCESS',
+PC:'PRINCESS',
+PRINCESS:'PRINCESS',
+CUSHION:'CUSHION',
+"Cushion Brilliant":'CUSHION',
+Cushion:'CUSHION BRILLIANT',
+CB:'CUSHION BRILLIANT',
+"Cushion Modified":'CUSHION',
+C:'CUSHION',
+CU:'CUSHION',
+CMB:'CUSHION',
+CUSH:'CUSHION',
+CRC:'CUSHION',
+SCMB:'CUSHION',
+"CUSHION MODIFIED":'CUSHION',
+'CUSHION BRILLIANT':'CUSHION',
+ASSCHER:'ASSCHER',
+A:'ASSCHER',
+CSS:'ASSCHER',
+CSSC:'ASSCHER',
+AC:'ASSCHER',
+Asscher:'ASSCHER',
+MARQUISE:'MARQUISE',
+Marquise:'MARQUISE',
+MQB:'MARQUISE',
+M:'MARQUISE',
+MQ:'MARQUISE',
+OVAL:'OVAL',
+Oval:'OVAL',
+O:'OVAL',
+OV:'OVAL',
+OMB:'OVAL',
+RADIANT:'RADIANT',
+Radiant:'RADIANT',
+R:'RADIANT',
+RAD:'RADIANT',
+RA:'RADIANT',
+RC:'RADIANT',
+RDNv:'RADIANT',
+"Square Radiant":'RADIANT',
+"Sq Radiant":'RADIANT',
+SQR:'RADIANT',
+'SQUARE RADIANT':'RADIANT',
+PEAR:'PEAR',
+P:'PEAR',
+PS:'PEAR',
+PSH:'PEAR',
+PB:'PEAR',
+PMB:'PEAR',
+EMERALD:'EMERALD',
+Emerald:'EMERALD',
+E:'EMERALD',
+EM:'EMERALD',
+EC:'EMERALD',
+'Square Emerald':'EMERALD',
+SQE:'EMERALD',
+SQEM:'EMERALD',
+SX:'EMERALD',
+'SQUARE EMERALD':'EMERALD',
+HEART:'HEART',
+Heart:'HEART',
+H:'HEART',
+HS:'HEART',
+HT:'HEART',
+MHRC:'HEART',
+  }
+
 
   
  
@@ -360,17 +442,97 @@ let listLoader = []
 //   // console.log("a")
 // }
 
+// let cuttt =["EX","VG","GD","F"]
+// let clarityy = ["I1","SI3","SI2","SI1","VS2","VS1","VVS2","VVS1","IF"]
+
+// response.diamonds.filter(item => (item.id.
+//   toString().includes(search)) || (item.certificate_num.
+//     toLowerCase().includes(search.toLowerCase())))
+
+
+const [selectedSort,setSelectedSort] = useState("Price:Low-to-High")
 const [search, setSearch] = useState('')
-const filteredDiamonds = !search? response.diamonds  : 
-response.diamonds.filter(item => (item.id.
-  toString().includes(search)) || (item.certificate_num.
-    toLowerCase().includes(search.toLowerCase())))
+useEffect(() => {
+setData(prevData => ({
+  ...prevData,
+  page_offset: 1,
+  search_ID : search
+
+}))
+},[search]);
 
    
-     const sortDiamonds = response.diamonds.sort((a, b) => b.fame_price - a.fame_price)
-console.log("sort")
-            console.log(sortDiamonds)
-            console.log("sort")
+   function handleSelectChange(event){
+     console.log(event.target.value)
+    setSelectedSort(event.target.value);
+    
+   
+    {event.target.value=== "Price:Low-to-High"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'ASC',
+      sort_by: 'fame_price'
+   
+    })):event.target.value=== "Price:High-to-Low"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'DESC',
+      sort_by: 'fame_price'
+   
+    })):event.target.value=== "Carat:Low-to-High"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'ASC',
+      sort_by: 'carat'
+   
+    })):event.target.value=== "Carat:High-to-Low"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'DESC',
+      sort_by: 'carat'
+   
+    })):event.target.value=== "Color:Low-to-High"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'ASC',
+      sort_by: 'color'
+   
+    })):event.target.value=== "Color:High-to-Low"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'DESC',
+      sort_by: 'color'
+   
+    })):event.target.value=== "Clarity:Low-to-High"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'ASC',
+      sort_by: 'clarity'
+   
+    })):event.target.value=== "Clarity:High-to-Low"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'DESC',
+      sort_by: 'clarity'
+   
+    })):event.target.value=== "Cut:Low-to-High"?setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'ASC',
+      sort_by: 'cut'
+   
+    })):setData(prevData => ({
+      ...prevData,
+      page_offset: 1,
+      sorting_order: 'DESC',
+      sort_by: 'cut'
+   
+    })) }
+   
+
+   }
+     
+
         
           
           
@@ -567,7 +729,7 @@ console.log("sort")
    <div className='max-w-[100%] flex  mb-[5px]'>
    <div className='mr-auto'>Change: <i className="fa-solid fa-list cursor-pointer" onClick={list}></i>  <i className="fa-solid fa-grip cursor-pointer" onClick={grid}></i></div>
       <div className='ml-auto'>
-      <span className=' px-[5px] inline-block '>Sort By:</span><select value={selectedOptions} onChange={handleSelectChange} className='min-w-[188px] py-[5px]'>
+      <span className=' px-[5px] inline-block '>Sort By:</span><select value={selectedSort} onChange={handleSelectChange} className='min-w-[188px] py-[5px]'>
         <option  value="Price:Low-to-High">Price: Low-to-High</option>
         <option value="Price:High-to-Low">Price: High-to-Low</option>
         <option value="Carat:Low-to-High">Carat: Low-to-High</option>
@@ -614,7 +776,7 @@ console.log("sort")
   }
 >
 <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%] ">
-{filteredDiamonds.map((item) => 
+{response.diamonds.map((item) => 
 <div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>
   { item.image_url?
   <div className={` ${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
@@ -637,7 +799,7 @@ console.log("sort")
   </div>:<div className={`${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
-    <Image src={ item.shape==="ROUND"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg":item.shape==="PRINCESS"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg":item.shape==="CUSHION"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg":item.shape==="ASSCHER"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":item.shape==="MARQUISE"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":item.shape==="OVAL"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":item.shape==="RADIANT"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":item.shape==="PEAR"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":item.shape==="EMERALD"?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" objectFit="cover"/>{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>:<i className="fa-solid fa-heart absolute top-[5px] right-[5px]" onClick={()=>comparehearts(item.stock_num)}></i>}
+    <Image src={names[item.shape]==="ROUND" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/round.jpg": names[item.shape]==="PRINCESS" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/princess.jpg": names[item.shape]==="CUSHION" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/cushion.jpg": names[item.shape]==="ASSCHER" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/asscher.jpg":names[item.shape]==="MARQUISE" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/marquise.jpg":names[item.shape]==="OVAL" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/oval.jpg":names[item.shape]==="RADIANT" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/radiant.jpg":names[item.shape]==="PEAR" ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/pear.jpg":names[item.shape]==="EMERALD"  ?"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/emerald.jpg":"https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/heart.jpg"} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" objectFit="cover"/>{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>:<i className="fa-solid fa-heart absolute top-[5px] right-[5px]" onClick={()=>comparehearts(item.stock_num)}></i>}
     </div><div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
       <p className='mb-[5px]'>SKU: {item.stock_num}</p>
       <p className='mb-[5px]'>Report: {item.lab}</p>
@@ -651,7 +813,7 @@ console.log("sort")
 
   
   <div className='border-[#dddddd] p-[10px] border' onMouseOver={()=>ul(item.stock_num)} onMouseOut={ ()=>ulout(item.stock_num)}>
-    <div className={`${tu && item.stock_num === saveid?"underline":"no-underline"}`}>{item.carat} carat {item.shape}</div>
+    <div className={`${tu && item.stock_num === saveid?"underline":"no-underline"}`}>{item.carat} carat {names[item.shape] }</div>
     <div>{item.cut==="VG"?"Very Good":item.cut==="EX"?"Exellent":item.cut==="GD"?"Good":item.cut==="F"?"Fair":"Poor"} | {item.color} | {item.clarity}</div> 
     <div className='flex justify-between' >
       <div>£ {parseInt(item.fame_price) } (ex VAT)</div>
@@ -694,7 +856,7 @@ console.log("sort")
 }
   scrollableTarget="scrollableDiv"
 >
-{filteredDiamonds.map((item) => 
+{response.diamonds.map((item) => 
     <div className=' w-[100%] grid grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer' onMouseEnter={()=>sideItem(item.stock_num)} >
         <p >{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart"></i>:<i className="fa-solid fa-heart" onClick={()=>comparehearts(item.stock_num)}></i>}</p>
         <p>{item.shape}</p>
