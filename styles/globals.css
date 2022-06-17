@@ -131,3 +131,11 @@ input{
   height: 100%;
  
 }
+
+ 
+.fa-arrow-right-long:last-child{
+  display: none;
+}
+.com:last-child .fa-arrow-right-long {
+  display: none;
+}
