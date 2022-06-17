@@ -132,10 +132,10 @@ input{
  
 }
 
- 
-.fa-arrow-right-long:last-child{
+.bb:first-child > .pp> .fa-arrow-left-long{
   display: none;
 }
-.com:last-child .fa-arrow-right-long {
+
+.bb:last-child > .pp> .fa-arrow-right-long{
   display: none;
 }

@@ -148,7 +148,7 @@ export default function compare(){
             }, []);
 
        
-           
+          
 
     // function remove(p){
     //     const index = compareItems.indexOf(p);
@@ -159,7 +159,7 @@ export default function compare(){
 
       useEffect(() => {
    
-          localStorage.setItem('compare', JSON.stringify(compareItems))
+        localStorage.setItem('compare', JSON.stringify(compareItems))
     
         localStorage.setItem('heartcount', JSON.stringify(heartCount))
      
@@ -179,6 +179,13 @@ useEffect(()=>{
     })
    
 },[heartCount])
+
+function swap(){
+  setRes([res[0], res[1]] = [res[1], res[0]])
+
+  console.log(res)
+  console.log('swap')
+} 
 
    console.log('pop')
 console.log(res)
@@ -221,11 +228,11 @@ console.log(res)
     </div>
     </div>
    
-  <div className='w-[85%] flex dd'>
-  {res.map((item) =>  <div key={item.stock_num} className='w-[20%] ' >
-        <div  className='border border-[black] h-[40px] cursor-pointer flex items-center justify-center pp '><i class="fa-solid first:fa-arrow-left-long mr-[30px]"></i><p onClick={()=>{ const index = compareItems.indexOf(item.stock_num);
+  <div className='w-[85%] flex flex-row aa'>
+  {res.map((item) =>  <div key={item.stock_num} className='w-[20%] bb' >
+        <div  className='border border-[black] h-[40px] cursor-pointer flex items-center justify-center pp '><i onClick={swap} class="fa-solid fa-arrow-left-long mr-[30px]"></i><p onClick={()=>{ const index = compareItems.indexOf(item.stock_num);
         compareItems.splice(index, 1)
-        setheartCount(prev=>prev-1)}}>remove</p><i class="fa-solid fa-arrow-right-long ml-[30px]"></i></div>
+        setheartCount(prev=>prev-1)}}>remove</p><i onClick={swap} class="fa-solid fa-arrow-right-long ml-[30px]"></i></div>
       <div className='border border-[black] h-[150px] overflow-hidden bg-center'>{ item.image_url?<Image src={`/api/imagefetcher?url=${encodeURIComponent(
               item.image_url
             )}`} alt="hh"  className=' object-cover' width="100%" height="100%" layout="responsive" />:<Image src={`https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/${(nam[item.shape]).toLowerCase()}.jpg`} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" />}</div>
