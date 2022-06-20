@@ -168,7 +168,7 @@ export default function compare(){
 
  
 
-        
+        let a = []   
 
         let [res,setRes] = useState([])
 useEffect(()=>{
@@ -176,19 +176,79 @@ useEffect(()=>{
     .then(res1 => {
       const diamondss = res1.data;
       setRes(diamondss)
+    
     })
    
 },[heartCount])
 
-function swap(){
-  setRes([res[0], res[1]] = [res[1], res[0]])
+res.map(item=>a.push(item.stock_num))
 
-  console.log(res)
-  console.log('swap')
-} 
+
+
+function swapRight(p){
+
+  const node = document.getElementById("parent");
+  const list = document.getElementById(a[a.indexOf(p)+1]);
+  document.getElementById(a[a.indexOf(p)]).classList.add("animation2");
+  document.getElementById(a[a.indexOf(p)+1]).classList.add("animation1");
+  setTimeout(function() {
+    document.getElementById(a[a.indexOf(p)]).classList.remove("animation2");
+    document.getElementById(a[a.indexOf(p)+1]).classList.remove("animation1");
+    node.insertBefore(list, node.children[a.indexOf(p)]);
+    var temp = a[a.indexOf(p)]
+    var temp1 = a.indexOf(p) + 1
+    a.splice(a.indexOf(p),1,a[a.indexOf(p) + 1]);
+    a.splice(temp1,1,temp);
+   
+  }, 1000); 
+}
+
+
+function swapLeft(p){
+ 
+  
+  const node = document.getElementById("parent");
+  const list = document.getElementById(a[a.indexOf(p)]);
+ 
+  document.getElementById(a[a.indexOf(p)]).classList.add("animation1");
+  document.getElementById(a[a.indexOf(p)-1]).classList.add("animation2");
+  setTimeout(function() {
+    document.getElementById(a[a.indexOf(p)]).classList.remove("animation1");
+  document.getElementById(a[a.indexOf(p)-1]).classList.remove("animation2");
+  node.insertBefore(list, node.children[a.indexOf(p)-1]);
+ 
+  var temp = a[a.indexOf(p)]
+  var temp1 = a.indexOf(p) - 1
+  a.splice(a.indexOf(p),1,a[a.indexOf(p) - 1]);
+  a.splice(temp1,1,temp);
+
+ 
+}, 1000);
+
+  
+}
+let [boxName,setboxName] = useState()
+let [hide,sethide]=useState(false)
+
+function infobox(b){
+sethide(prev=>!prev)
+setboxName(b)
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener('click', function(e) {
+    const allModals = document.querySelectorAll('.box');
+    if (!e.path.some(x => x.className && (x.className.includes('box') && box  || x.className.includes('fa-circle-info') ))) {
+      allModals.forEach(x => {x.style.display = 'none' 
+     });
+    }
+  }, true)
+}
+
 
    console.log('pop')
-console.log(res)
+   console.log(res)
+
   
     return(
 
@@ -200,48 +260,66 @@ console.log(res)
 //         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 //       </Head>
 
-<div className="container max-w-[1130px] mx-auto ">
+<div className="container  max-w-[1130px] mx-auto ">
 <Link href="/diamonds">
 <div className='cursor-pointer mb-[50px]' >back to diamonds</div>
         </Link>
       
       <h1 className='text-[2em] text-center mb-[40px]'>Compare Diamond({res.length})</h1>
-      <div className='border border-[black] w-[100%] flex'>
-      <div className="w-[15%] ">
+      <div className='border border-[black]  w-[100%]  flex'>
+      <div className="w-[15%] relative">
       <div className="grid grid-rows-15 col-span-1 text-right  ">
       <div className='border border-[black] h-[40px]'></div>
       <div className='border border-[black] h-[150px] p-[10px] '>Image</div>
       <div className='border border-[black] h-[40px] p-[10px]'>View Details</div>
       <div className='border border-[black] h-[40px] p-[10px]'>Price</div>
       <div className='border border-[black] h-[40px]'></div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Shape</div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Carat Weight</div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Color</div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Clarity</div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Cut</div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Polish</div>
+    
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Shape <i onClick={()=>infobox('shape')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='shape'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>shape</div>}</div>
+      
+    
+      
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Carat Weight <i onClick={()=>infobox('carat')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='carat'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>carat</div>}
+</div>
+      
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Color <i onClick={()=>infobox('Color')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Color'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Color</div>}</div>
+
+
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Clarity <i onClick={()=>infobox('Clarity')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Clarity'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Clarity</div>}</div>
+
+
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Cut <i onClick={()=>infobox('Cut')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Cut'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Cut</div>}</div>
+
+
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Polish <i onClick={()=>infobox('Polish')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Polish'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Polish</div>}</div>
+
+
       <div className='border border-[black] h-[40px] p-[10px]'>Symmetry</div>
       <div className='border border-[black] h-[40px] p-[10px]'>Fluorescence</div>
       <div className='border border-[black] h-[40px] p-[10px]'>Measurements</div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Depth %</div>
-      <div className='border border-[black] h-[40px] p-[10px]'>Table %</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Depth % <i onClick={()=>infobox('Depth')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Depth'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Depth</div>}</div>
+
+
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Table % <i onClick={()=>infobox('Table')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Table'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Table</div>}</div>
+
+
     </div>
     </div>
    
-  <div className='w-[85%] flex flex-row aa'>
-  {res.map((item) =>  <div key={item.stock_num} className='w-[20%] bb' >
-        <div  className='border border-[black] h-[40px] cursor-pointer flex items-center justify-center pp '><i onClick={swap} class="fa-solid fa-arrow-left-long mr-[30px]"></i><p onClick={()=>{ const index = compareItems.indexOf(item.stock_num);
+  <div className=' overflow-x-scroll w-[85%] flex  aa' id='parent'>
+  {res.map((item) =>  <div key={item.stock_num} className='  bb' id={item.stock_num}>
+        <div  className='border border-[black] h-[40px] cursor-pointer flex items-center justify-center pp '><i onClick={()=>swapLeft(item.stock_num)} className="fa-solid fa-arrow-left-long mr-[30px]"></i><p onClick={()=>{ const index = compareItems.indexOf(item.stock_num);
         compareItems.splice(index, 1)
-        setheartCount(prev=>prev-1)}}>remove</p><i onClick={swap} class="fa-solid fa-arrow-right-long ml-[30px]"></i></div>
+        setheartCount(prev=>prev-1)}}>remove</p><i onClick={()=>swapRight(item.stock_num)} className="fa-solid fa-arrow-right-long ml-[30px]"></i></div>
       <div className='border border-[black] h-[150px] overflow-hidden bg-center'>{ item.image_url?<Image src={`/api/imagefetcher?url=${encodeURIComponent(
               item.image_url
             )}`} alt="hh"  className=' object-cover' width="100%" height="100%" layout="responsive" />:<Image src={`https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/${(nam[item.shape]).toLowerCase()}.jpg`} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" />}</div>
       <div className='border border-[black] h-[40px] flex items-center justify-center'>{item.stock_num}</div>
       <div className='border border-[black] h-[40px] flex items-center justify-center'>£ {parseInt(item.fame_price) }</div>
       <div className='border border-[black] h-[40px] flex items-center justify-center'><button className='px-[45px] py-[3px] bg-[#333333] rounded text-white'>ADD TO</button></div>
-      <div className='border border-[black] h-[40px] flex items-center justify-center'>{nam[item.shape]}</div>
-      <div className='border border-[black] h-[40px] flex items-center justify-center'>{item.carat }</div>
-      <div className='border border-[black] h-[40px] flex items-center justify-center'>{item.color }</div>
+      <div className='border border-[black] h-[40px] flex items-center justify-center'>{nam[item.shape]} </div>
+      <div className='border border-[black] h-[40px] flex items-center justify-center'>{item.carat } </div>
+      <div className='border border-[black] h-[40px] flex items-center justify-center'>{item.color } </div>
       <div className='border border-[black] h-[40px] flex items-center justify-center'>{item.clarity}</div>
       <div className='border border-[black] h-[40px] flex items-center justify-center'>{nam[item.cut] }</div>
       <div className='border border-[black] h-[40px] flex items-center justify-center'>{nam[item.polish] }</div>

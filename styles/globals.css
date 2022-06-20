@@ -139,3 +139,29 @@ input{
 .bb:last-child > .pp> .fa-arrow-right-long{
   display: none;
 }
+
+.animation1{
+  position: relative;
+  animation: mymove 1s ;
+  background: rgb(253, 252, 252,0.8);
+}
+
+@keyframes mymove {
+  from {right: 0px;}
+  to {right: 191px;}
+}
+
+.animation2{
+  position: relative;
+  animation: mymov 1s ;
+  background: rgb(255, 255, 255,0.8);
+}
+
+@keyframes mymov {
+  from {left: 0px;}
+  to {left: 191px;}
+}
+
+.bb{
+  min-width: 20% !important;
+}
