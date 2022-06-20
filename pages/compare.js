@@ -231,15 +231,22 @@ let [boxName,setboxName] = useState()
 let [hide,sethide]=useState(false)
 
 function infobox(b){
-sethide(prev=>!prev)
+  if(boxName===b){
+    sethide(prev=>!prev)
+  }else{
+    sethide(true)
+  }
+
 setboxName(b)
 }
 
 if (typeof window !== "undefined") {
   window.addEventListener('click', function(e) {
     const allModals = document.querySelectorAll('.box');
-    if (!e.path.some(x => x.className && (x.className.includes('box') && box  || x.className.includes('fa-circle-info') ))) {
-      allModals.forEach(x => {x.style.display = 'none' 
+    if (!e.path.some(x => x.className && (x.className.includes('box')   || x.className.includes('fa-circle-info') ))) {
+      allModals.forEach(x => {
+        x.style.display = 'none' 
+        sethide(false)
      });
     }
   }, true)
@@ -248,6 +255,99 @@ if (typeof window !== "undefined") {
 
    console.log('pop')
    console.log(res)
+
+   let shape = ['round','princess','cushion','asscher','marquise','oval','radiant','pear','emerald','heart']
+  let  s = shape.map(item => {
+   return(
+   <div key={item}>
+  <Image
+          src = {`https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/shapes/${item}.png`}
+          width={40}
+          height={40}
+         alt="Picture of the author"
+       
+        />
+        <p>{item}</p>
+     </div>
+     
+   ) 
+ })
+
+ let colorpara={
+   D:'D color: D is the highest color grade and is an extremely rare diamond since it is considered colorless.',
+   E:'E color: E has almost no color that can only be detected by a gemologist, and is a rare diamond.',
+   F:'F color: F is still considered colorless with only a very slight hint of color, and is rated a high quality diamond.',
+   G:'G color: G is a high quality diamond that is nearly colorless.',
+   H:'H color: H is a high quality diamond that is nearly colorless.',
+   I:'I color: I has only a slight hint of color and is rated a top value.',
+   J:'J color: J has slightly more color and is rated a top value.',
+   'K-Z':'K-Z color: These diamonds may appear yellow or slightly brown depending on the cut grade.'
+ }
+ let [paratext,setparatext] = useState(colorpara.D)
+
+ function paracolor(p){
+    setparatext(colorpara[p])
+ }
+
+ let color = ['D','E','F','G','H','I','J','K-Z']
+  let  color1 = color.map(item => {
+   return(
+   <div key={item} className={`p-[5px] bg-[#efefef] flex justify-center items-center cursor-pointer ${paratext===colorpara[item]?'bg-[#dddddd]':'bg-[#efefef]'}`} onClick={()=>paracolor(item)}>
+     {item}
+     </div>
+     
+   ) 
+ })
+
+ let claritypara={
+  F:'Flawless: Flawless: No internal or external flaws. Extremely Rare.',
+  IF:'Internally Flawless: Internally Flawless: no internal flaws, but some surface flaws',
+  'VVS1-':'VVS1-VVS2: Very Very Slightly Included (two grades). Minute inclusions very difficult to detect under 10x magnification by a trained',
+  'VS1-VS2':'VS1-VS2: Very Slightly Included (two grades). Minute inclusions seen only under 10x magnification.',
+  'SI1-SI2':'SI1-SI2: Slightly Included (two grades). Minute inclusions more easily detected under 10x magnification.',
+  'I1':'I1: Included. Diamonds may have minor eye-visible inclusions. RIO offers a limited selection of jewelry with I1 clarity diamonds.',
+  
+}
+
+
+
+let [claritytext,setclaritytext] = useState(claritypara.F)
+function paraclarity(p){
+  setclaritytext(claritypara[p])
+}
+ let clarity = ['F','IF','VVS1-','VS1-VS2','SI1-SI2','I1']
+  let  clarity1 = clarity.map(item => {
+   return(
+   <div key={item} className={`p-[5px] bg-[#efefef] flex justify-center items-center cursor-pointer ${claritytext===claritypara[item]?'bg-[#dddddd]':'bg-[#efefef]'}`} onClick={()=>paraclarity(item)}>
+     {item}
+     </div>
+     
+   ) 
+ })
+
+
+ let cutpara={
+  Excellent:'Excellent cut: Excellent cut reflects most of the light and is an exceptional quality diamond.',
+  'Very Good':'Very Good cut: Very good cut reflects most of the light and is considered an excellent value.',
+  Good:'Good cut: Good cut grade reflects a good amount of light, although less than a very good cut grade.',
+  Fair:'Fair cut: Highest cut grade. Its proportions produce a beautiful balance of fire and sparkle in a diamond.',
+}
+
+
+
+let [cuttext,setcuttext] = useState(cutpara.Excellent)
+function paracut(p){
+  setcuttext(cutpara[p])
+}
+ let cut = ['Excellent','Very Good','Good','Fair']
+  let  cut1 = cut.map(item => {
+   return(
+   <div key={item} className={`p-[5px] bg-[#efefef] flex justify-center items-center cursor-pointer ${cuttext===cutpara[item]?'bg-[#dddddd]':'bg-[#efefef]'}`} onClick={()=>paracut(item)}>
+     {item}
+     </div>
+     
+   ) 
+ })
 
   
     return(
@@ -275,32 +375,69 @@ if (typeof window !== "undefined") {
       <div className='border border-[black] h-[40px] p-[10px]'>Price</div>
       <div className='border border-[black] h-[40px]'></div>
     
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Shape <i onClick={()=>infobox('shape')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='shape'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>shape</div>}</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Shape <i onClick={()=>infobox('shape')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='shape'&&
+      <div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
+        <h2 className='text-left '>Diamond shape</h2>
+        <hr/>
+        <div class="grid grid-cols-4 gap-4">
+ {s}
+
+
+</div>
+    
+      </div>}
+      </div>
       
     
       
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Carat Weight <i onClick={()=>infobox('carat')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='carat'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>carat</div>}
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Carat Weight <i onClick={()=>infobox('carat')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='carat'&&<div className='w-[300px] absolute left-[169px] top-[-70px] z-40 bg-[white] border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Carat (ct.)</h2>
+        <hr/><p className='text-left mt-[10px] '>The international unit of weight, used for measuring diamonds and gemstones. 1 carat is equal to 200 milligrams, or 0.2 grams.</p></div>}
 </div>
       
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Color <i onClick={()=>infobox('Color')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Color'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Color</div>}</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Color <i onClick={()=>infobox('Color')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Color'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
+      <h2 className='text-left '>Diamond color</h2>
+      <hr/>
+      <p className='py-[10px] bg-[#efefef] text-left mb-[10px]'>Choose a color grade:</p>
+      <div class="grid grid-cols-4 gap-4">
+        {color1}
+      </div>
+      <p className='text-left mt-[10px]'>{paratext}</p>
+      </div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Clarity <i onClick={()=>infobox('Clarity')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Clarity'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Clarity</div>}</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Clarity <i onClick={()=>infobox('Clarity')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Clarity'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
+      <h2 className='text-left '>Diamond clarity</h2>
+      <hr/>
+      <p className='py-[10px] bg-[#efefef] text-left mb-[10px]'>Choose a color grade:</p>
+      <div class="grid grid-cols-3 gap-4">
+        {clarity1}
+      </div>
+      <p className='text-left mt-[10px]'>{claritytext}</p>
+        </div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Cut <i onClick={()=>infobox('Cut')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Cut'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Cut</div>}</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Cut <i onClick={()=>infobox('Cut')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Cut'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'> <h2 className='text-left '>Diamond Cut</h2>
+      <hr/>
+      <p className='py-[10px] bg-[#efefef] text-left mb-[10px]'>Choose a color grade:</p>
+      <div class="grid grid-cols-4 gap-4">
+        {cut1}
+      </div>
+      <p className='text-left mt-[10px]'>{cuttext}</p></div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Polish <i onClick={()=>infobox('Polish')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Polish'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Polish</div>}</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Polish <i onClick={()=>infobox('Polish')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Polish'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Polish</h2>
+        <hr/><p className='text-left mt-[10px] '>The overall condition of a finished diamond's faceted surfaces, including how smoothly the facets have been polished, whether any marks are visible from the polishing wheel, and how defined the edges of each facet are. Polish marks are almost always invisible to the unaided eye, but good polish is essential for maximum light performance.</p></div>}</div>
 
 
       <div className='border border-[black] h-[40px] p-[10px]'>Symmetry</div>
       <div className='border border-[black] h-[40px] p-[10px]'>Fluorescence</div>
       <div className='border border-[black] h-[40px] p-[10px]'>Measurements</div>
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Depth % <i onClick={()=>infobox('Depth')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Depth'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Depth</div>}</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Depth % <i onClick={()=>infobox('Depth')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Depth'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Depth percentage</h2>
+        <hr/><p className='text-left mt-[10px] '>The height of a diamond, measured from the culet to the table, divided by its average girdle diameter. One of the basic proportions that contributes to a diamond's appearance, brilliance and fire.</p></div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Table % <i onClick={()=>infobox('Table')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Table'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white] h-[300px] border border-[black] box'>Table</div>}</div>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Table % <i onClick={()=>infobox('Table')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Table'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Table percentage</h2>
+        <hr/><p className='text-left mt-[10px] '>The width of the diamond's table expressed as a percentage of its average diameter. A component of the overall cut grade, this measurement is critical to a diamond's light performance.</p></div>}</div>
 
 
     </div>
