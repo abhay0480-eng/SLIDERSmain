@@ -64,7 +64,7 @@ export default function Home({ ndata }) {
   const initialRender1 = React.useRef(false);
 
 
-
+console.log(ndata.price_total_from_in_currency)
   
   let d = {
     filter_price_min: ndata.price_total_from_in_currency,
@@ -505,8 +505,7 @@ let listLoader = []
  })
 
  function reset(){
-  localStorage.clear();
-  window.location.reload();
+  setData(d)
  }
 
 //  function lowpricesort(){
@@ -608,6 +607,44 @@ setData(prevData => ({
 
    }
      
+   let [mobileFilters, setMobileFilters] = useState(true)
+   let [mobile, setMobile] = useState(false)
+
+   function showFilters(){
+    if(mobile===false){
+      setMobileFilters(prev=>!prev)
+    }else{
+  
+      setMobileextraFilters(prev=>!prev)
+      setMobileFilters(prev=>!prev)
+    } 
+   }
+
+   let [mobileextraFilters, setMobileextraFilters] = useState(false)
+
+   function showExtraFilters(p){
+     setMobileextraFilters(prev=>!prev)
+     if(p==='plus'){
+      setMobile(true)
+     }else{
+      setMobile(false)
+     }
+   
+   }
+
+   let [filterBox, setfilterBox] = useState()
+   let [fBox, setfBox] = useState(false)
+
+   function filterbox(p){
+  
+    setfilterBox(p)
+    if(filterBox===p){
+      setfBox(prev=>!prev)
+    }else{
+      setfBox(true)
+    }
+    
+   }
 
         
           
@@ -635,24 +672,110 @@ setData(prevData => ({
       height={100}
     />
    </div>
-   {!comparelist && <div className="container max-w-[1130px] mx-auto ">
-   <div className="grid grid-cols-2 gap-x-20 w-[100%]  border-b pb-[20px] border-[#d1d1d1]">
-        <div className='flex items-center mt-[30px] w-[100%]'>
-         <div className='w-[20%]'>SHAPE</div>
-         <div className='flex w-[100%] justify-between items-center '>{s}</div> 
-       </div>
-
+   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] p-[10px] ${filterBox==='SHAPE' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
+     <div className='flex justify-between mb-[30px]'>
+       <p onClick={()=>filterbox('SHAPE')}>Close</p>
+       <p onClick={reset}>Reset</p>
+     </div>
+     <div className="grid grid-cols-4 gap-4">
+     {s}
+</div>
+<div className='flex justify-center mt-[20px]'>
+<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
+</div>
+   </div> */}
+   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] ${filterBox==='PRICE' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
+   <div className='flex justify-between mb-[30px]'>
+       <p onClick={()=>filterbox('PRICE')}>Close</p>
+       <p onClick={reset}>Reset</p>
+     </div>
+     <div className='flex justify-center'>
      <OptionSlider 
-          name="PRICE" 
           range={priceArr} 
           data={Data} 
           click={handleChange} 
           options={priceOptions} 
           handleclick={handle}
-          left="filter_price_min"
-          right="filter_price_max"
+          left='filter_price_min'
+          right='filter_price_max'
           flag="op"
      />
+     </div>
+     
+     <div className='flex justify-center mt-[20px]'>
+<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
+</div>
+   </div> */}
+   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] ${filterBox==='CARAT' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
+   <div className='flex justify-between mb-[30px]'>
+       <p onClick={()=>filterbox('CARAT')}>Close</p>
+       <p onClick={reset}>Reset</p>
+       
+     </div>
+     <div className='flex justify-center'>
+       <OptionSlider 
+         
+          range={caratArr} 
+          data={Data} 
+          click={handleChange} 
+          options={caratOptions}
+          left="filter_carat_min"
+          right="filter_carat_max"
+          handleclick={handle}
+          flag="op"
+       />
+     </div>
+     <div className='flex justify-center mt-[20px]'>
+<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
+</div>
+   </div> */}
+   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] ${filterBox==='CUT' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
+   <div className='flex justify-between mb-[30px]'>
+       <p onClick={()=>filterbox('CUT')}>Close</p>
+       <p onClick={reset}>Reset</p>
+       
+     </div>
+     <div className='flex justify-center'>
+     <OptionSlider 
+          
+          range={{ min: 0 , max: 4 }}
+          data={Data} 
+          click={handleChange} 
+          handleclick={handle}
+          left="filter_cut_min"
+          right="filter_cut_max"
+          flag="cut"
+          kut={4}
+        />
+     </div>
+     <div className='flex justify-center mt-[20px]'>
+<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
+</div>
+   </div> */}
+   {/* <div className={`block md:hidden fixed z-40 h-[300px] ${filterBox==='COLOR' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[pink]` }><p>COLOR</p></div>
+   <div className={`block md:hidden fixed z-40 h-[300px] ${filterBox==='CLARITY' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[pink]` }><p>CLARITY</p></div> */}
+   {!comparelist && <div className="container max-w-[1130px] mx-auto ">
+
+   <div className="grid grid-cols-4  gap-x-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] md:border-[#d1d1d1] ">
+        <div className='md:flex md:items-center md:mt-[30px] md:w-[100%]  '>
+         <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] md:border-none'>SHAPE</div>
+         <div className='hidden md:block md:flex w-[100%] justify-between items-center '>{s}</div> 
+       </div>
+
+   
+        <OptionSlider 
+                  name="PRICE" 
+                  range={priceArr} 
+                  data={Data} 
+                  click={handleChange} 
+                  options={priceOptions} 
+                  handleclick={handle}
+                  left="filter_price_min"
+                  right="filter_price_max"
+                  flag="op"
+            />
+    
+     
        
      
       <OptionSlider 
@@ -705,7 +828,8 @@ setData(prevData => ({
      />
       </div>
 
-      <div className={`${flag?"grid grid-cols-2 gap-x-20 w-[100%] max-h-[500px] overflow-hidden duration-1000 ease-in":"max-h-[0px] grid grid-cols-2 gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+      <div className={`${flag?"md:inline-block grid grid-cols-4  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block grid grid-cols-4 md:max-h-[0px] flex flex-wrap  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+
    <OptionSlider 
      name="FLUOR" 
      range={{ min: 0 , max: 4 }}
@@ -718,9 +842,9 @@ setData(prevData => ({
      kut={4}
      />
 
-<div className='flex justify-between mt-[30px]'>
-       <div>REPORT</div>
-       <div className='w-[100%] ml-[25px]'>
+<div className='md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
+       <div  className='md:w-[20%] w-[100%]'>REPORT</div>
+       <div className='hidden md:block md:w-[100%] md:ml-[25px]'>
       
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("GIA")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("GIA","lab")}>GIA</span>
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("IGI")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("IGI","lab")}>IGI</span>
@@ -775,9 +899,9 @@ setData(prevData => ({
         flag="depth"
      />
 
-<div className='flex justify-between mb-[30px] mt-[30px]'>
-       <div>LOCATE</div>
-       <div className='w-[100%] ml-[20px]'>
+<div className=' md:mb-[30px]  md:justify-between  md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
+       <div  className='md:w-[20%] w-[100%]'>LOCATE</div>
+       <div className='  hidden md:block md:w-[100%] md:ml-[20px]'>
       
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.origin == "ALL" ?"bg-black text-white":"bg-white text-black"}`} onClick={() => origin("ALL")}>ALL</span>
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.origin == "UK" ?"bg-black text-white":"bg-white text-black"}`} onClick={() => origin("UK")}>UK</span>
@@ -788,15 +912,40 @@ setData(prevData => ({
      
 </div>
 
-<div className='max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
+{/* <div className='block md:hidden w-[100%] text-center mb-[10px]'>
+<button className='bg-[black] text-[white] w-[100%] py-[8px]' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
+</div>
+
+{(mobileFilters)&&<div className="block md:hidden grid grid-cols-4 gap-x-2 gap-y-2 mb-[10px]">
+ <button className='border border-[black] px-[10px] py-[10px] rounded ' onClick={()=>filterbox('SHAPE')}>SHAPE</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('PRICE')}>PRICE</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('CARAT')}>CARAT</button>
+ {!mobileextraFilters&&<button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>showExtraFilters('plus')}>+</button>}
+ {mobileextraFilters&&<button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('CUT')}>CUT </button>}
+ </div>}
+ {(mobileextraFilters ) &&<div className="block md:hidden grid grid-cols-4 gap-x-2 gap-y-2 mb-[10px]">
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('COLOR')}>COLOR  </button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('CLARITY')}>CLARITY  </button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('FLUOR')}>FLUOR</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('REPORT')}>REPORT</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('SYMM')}>SYMM</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('POLISH')}>POLISH</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('TABLE')}>TABLE</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('DEPTH')}>DEPTH</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('LOCATE')}>LOCATE</button>
+ <button className='border border-[black] px-[10px] py-[10px] rounded'onClick={()=>showExtraFilters('minus')}><i className="fa-solid fa-xmark"></i></button>
+
+ </div>} */}
+
+
+<div className='hidden md:block max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
   <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`}  onClick={show} > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i className="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
    <div className='col-end justify-self-end self-center'><span className='cursor-pointer' onClick={reset}><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
    </div>
 
-   <div className='max-w-[100%] flex  mb-[15px]'>
+   <div className='hidden  md:block max-w-[100%] flex  mb-[15px] '>
       <div className='ml-auto'>
-        <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID'  
-                  
+        <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID' 
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}/><span className=' px-[5px] inline-block border border-[#ddd]'><i className="fa-solid fa-magnifying-glass"></i></span> 
         {/* */}
@@ -804,10 +953,10 @@ setData(prevData => ({
    </div>
 
 
-   <div className='max-w-[100%] flex  mb-[5px]'>
-   <div className='mr-auto'>Change: <i className="fa-solid fa-list cursor-pointer" onClick={list}></i>  <i className="fa-solid fa-grip cursor-pointer" onClick={grid}></i></div>
-      <div className='ml-auto'>
-      <span className=' px-[5px] inline-block '>Sort By:</span><select value={selectedSort} onChange={handleSelectChange} className='min-w-[188px] py-[5px]'>
+   <div className='w-[100%] flex justify-between items-center mb-[15px] mt-[20px]'>
+   <div className='w-[50%] md:w-auto'>Change: <i className="fa-solid fa-list cursor-pointer" onClick={list}></i>  <i className="fa-solid fa-grip cursor-pointer" onClick={grid}></i></div>
+      <div className='w-[50%] md:w-auto'>
+      <span className='hidden md:inline-block px-[5px] inline-block '>Sort By:</span><select value={selectedSort} onChange={handleSelectChange} className='w-[170px] md:min-w-[188px] py-[5px]'>
         <option  value="Price:Low-to-High">Price: Low-to-High</option>
         <option value="Price:High-to-Low">Price: High-to-Low</option>
         <option value="Carat:Low-to-High">Carat: Low-to-High</option>
@@ -824,17 +973,15 @@ setData(prevData => ({
    
    </div>
 
-   <div className="max-w-[100%]  grid grid-cols-2 gap-4">
-  <div className='flex '>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`}>RECENTLY VIEWED (1)</button>
+   <div className="max-w-[100%]  grid grid-cols-1 gap-4 mb-[10px]">
+<div className='w-[100%] flex items-center'>
+<button className={`inline-block h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
+    <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto  md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`}>RECENTLY VIEWED (1)</button>
     <Link href="/compare">
-    <button className={`block  px-[20px] py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} onClick={compare}> COMPARE ({heartCount})</button>
+    <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`} onClick={compare}> COMPARE ({heartCount})</button>
         </Link>
-   
-  </div>
-
-  <div></div>
+</div>
+  
 </div>
 
  <div>{gridlist&&<InfiniteScroll
@@ -856,7 +1003,7 @@ setData(prevData => ({
 </div>
   }
 >
-<div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%] ">
+<div className="grid grid-cols-2 md:grid-cols-3 md:gap-x-9 md:gap-y-2.5 w-[100%] lg:grid-cols-4">
 {!response && l.map(item =>item)}
 {response.diamonds.map((item) =>
 <div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>

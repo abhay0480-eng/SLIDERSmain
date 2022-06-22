@@ -375,11 +375,11 @@ function paracut(p){
       <div className='border border-[black] h-[40px] p-[10px]'>Price</div>
       <div className='border border-[black] h-[40px]'></div>
     
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Shape <i onClick={()=>infobox('shape')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='shape'&&
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Shape <i onClick={()=>infobox('shape')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='shape'&&
       <div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
         <h2 className='text-left '>Diamond shape</h2>
         <hr/>
-        <div class="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4">
  {s}
 
 
@@ -390,53 +390,53 @@ function paracut(p){
       
     
       
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Carat Weight <i onClick={()=>infobox('carat')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='carat'&&<div className='w-[300px] absolute left-[169px] top-[-70px] z-40 bg-[white] border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Carat (ct.)</h2>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Carat Weight <i onClick={()=>infobox('carat')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='carat'&&<div className='w-[300px] absolute left-[169px] top-[-70px] z-40 bg-[white] border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Carat (ct.)</h2>
         <hr/><p className='text-left mt-[10px] '>The international unit of weight, used for measuring diamonds and gemstones. 1 carat is equal to 200 milligrams, or 0.2 grams.</p></div>}
 </div>
       
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Color <i onClick={()=>infobox('Color')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Color'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Color <i onClick={()=>infobox('Color')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='Color'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
       <h2 className='text-left '>Diamond color</h2>
       <hr/>
       <p className='py-[10px] bg-[#efefef] text-left mb-[10px]'>Choose a color grade:</p>
-      <div class="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {color1}
       </div>
       <p className='text-left mt-[10px]'>{paratext}</p>
       </div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Clarity <i onClick={()=>infobox('Clarity')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Clarity'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Clarity <i onClick={()=>infobox('Clarity')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='Clarity'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'>
       <h2 className='text-left '>Diamond clarity</h2>
       <hr/>
       <p className='py-[10px] bg-[#efefef] text-left mb-[10px]'>Choose a color grade:</p>
-      <div class="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {clarity1}
       </div>
       <p className='text-left mt-[10px]'>{claritytext}</p>
         </div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Cut <i onClick={()=>infobox('Cut')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Cut'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'> <h2 className='text-left '>Diamond Cut</h2>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Cut <i onClick={()=>infobox('Cut')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='Cut'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'> <h2 className='text-left '>Diamond Cut</h2>
       <hr/>
       <p className='py-[10px] bg-[#efefef] text-left mb-[10px]'>Choose a color grade:</p>
-      <div class="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {cut1}
       </div>
       <p className='text-left mt-[10px]'>{cuttext}</p></div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Polish <i onClick={()=>infobox('Polish')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Polish'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Polish</h2>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Polish <i onClick={()=>infobox('Polish')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='Polish'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Polish</h2>
         <hr/><p className='text-left mt-[10px] '>The overall condition of a finished diamond's faceted surfaces, including how smoothly the facets have been polished, whether any marks are visible from the polishing wheel, and how defined the edges of each facet are. Polish marks are almost always invisible to the unaided eye, but good polish is essential for maximum light performance.</p></div>}</div>
 
 
       <div className='border border-[black] h-[40px] p-[10px]'>Symmetry</div>
       <div className='border border-[black] h-[40px] p-[10px]'>Fluorescence</div>
       <div className='border border-[black] h-[40px] p-[10px]'>Measurements</div>
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Depth % <i onClick={()=>infobox('Depth')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Depth'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Depth percentage</h2>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Depth % <i onClick={()=>infobox('Depth')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='Depth'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Depth percentage</h2>
         <hr/><p className='text-left mt-[10px] '>The height of a diamond, measured from the culet to the table, divided by its average girdle diameter. One of the basic proportions that contributes to a diamond's appearance, brilliance and fire.</p></div>}</div>
 
 
-      <div className='border border-[black] h-[40px] p-[10px] relative'>Table % <i onClick={()=>infobox('Table')} class="fa-solid fa-circle-info"></i>{hide&& boxName==='Table'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Table percentage</h2>
+      <div className='border border-[black] h-[40px] p-[10px] relative'>Table % <i onClick={()=>infobox('Table')} className="fa-solid fa-circle-info"></i>{hide&& boxName==='Table'&&<div className='w-[300px] absolute left-[169px] top-[-100px] z-40 bg-[white]  border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Table percentage</h2>
         <hr/><p className='text-left mt-[10px] '>The width of the diamond's table expressed as a percentage of its average diameter. A component of the overall cut grade, this measurement is critical to a diamond's light performance.</p></div>}</div>
 
 
