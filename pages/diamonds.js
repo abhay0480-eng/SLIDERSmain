@@ -645,12 +645,6 @@ setData(prevData => ({
     }
     
    }
-
-        
-          
-          
-
-
   return (
     <div className={styles.container}>
       <Head>
@@ -755,15 +749,17 @@ setData(prevData => ({
    {/* <div className={`block md:hidden fixed z-40 h-[300px] ${filterBox==='COLOR' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[pink]` }><p>COLOR</p></div>
    <div className={`block md:hidden fixed z-40 h-[300px] ${filterBox==='CLARITY' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[pink]` }><p>CLARITY</p></div> */}
    {!comparelist && <div className="container max-w-[1130px] mx-auto ">
-
-   <div className="grid grid-cols-4  gap-x-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] md:border-[#d1d1d1] ">
-        <div className='md:flex md:items-center md:mt-[30px] md:w-[100%]  '>
-         <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] md:border-none'>SHAPE</div>
+   <div className='block md:hidden w-[100%] text-center mb-[10px]'>
+<button className='bg-[black] text-[white] w-[100%] py-[8px]' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
+</div>
+   <div className="grid grid-cols-4  gap-x-2 gap-y-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] md:border-[#d1d1d1] ">
+        {(mobileFilters)&&<div className='md:flex md:items-center md:mt-[30px] md:w-[100%]  '>
+         <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] rounded md:border-none' >SHAPE</div>
          <div className='hidden md:block md:flex w-[100%] justify-between items-center '>{s}</div> 
-       </div>
+       </div>}
 
-   
-        <OptionSlider 
+       
+        {(mobileFilters)&&<OptionSlider 
                   name="PRICE" 
                   range={priceArr} 
                   data={Data} 
@@ -773,12 +769,18 @@ setData(prevData => ({
                   left="filter_price_min"
                   right="filter_price_max"
                   flag="op"
-            />
+                  filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+            /> }
+           
     
      
        
      
-      <OptionSlider 
+      {(mobileFilters)&&<OptionSlider 
           name="CARAT" 
           range={caratArr} 
           data={Data} 
@@ -788,9 +790,15 @@ setData(prevData => ({
           right="filter_carat_max"
           handleclick={handle}
           flag="op"
-       />
+          filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+       />}
+       {(mobileFilters)&&!mobileextraFilters&&<button className='md:hidden border border-[black] px-[10px] py-[10px] rounded' onClick={()=>showExtraFilters('plus')}>+</button>}
 
-      <OptionSlider 
+      {(mobileFilters&&mobileextraFilters)&&<OptionSlider 
           name="CUT" 
           range={{ min: 0 , max: 4 }}
           data={Data} 
@@ -800,9 +808,14 @@ setData(prevData => ({
           right="filter_cut_max"
           flag="cut"
           kut={4}
-        />
+          filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+        />}
 
-      <OptionSlider 
+      {(mobileextraFilters ) &&<OptionSlider 
        name="COLOR" 
        range={{ min: 0 , max: 10 }}
        data={Data} 
@@ -812,9 +825,14 @@ setData(prevData => ({
        handleclick={handle}
        flag="color"
        kut={9}
-       />
+       filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+       />}
 
-<OptionSlider 
+{(mobileextraFilters ) &&<OptionSlider 
      name="CLARITY" 
      range={{ min: 0 , max: 9 }}
      data={Data} 
@@ -824,13 +842,18 @@ setData(prevData => ({
      right="filter_clarity_max"
      flag="clarity"
      kut={9}
+     filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
      
-     />
-      </div>
+     />}
+  
 
-      <div className={`${flag?"md:inline-block grid grid-cols-4  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block grid grid-cols-4 md:max-h-[0px] flex flex-wrap  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
-
-   <OptionSlider 
+      {/* <div className={`${flag?"md:inline-block grid grid-cols-4  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block grid grid-cols-4 md:max-h-[0px] flex flex-wrap  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}> */}
+      <div className={`${flag?"md:inline-block  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+   {(mobileextraFilters ) &&<OptionSlider 
      name="FLUOR" 
      range={{ min: 0 , max: 4 }}
      data={Data} 
@@ -840,10 +863,19 @@ setData(prevData => ({
      right="filter_fluorescence_max"
      flag="fluor"
      kut={4}
-     />
+     bool={flag}
+     filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+     />}
+     </div>
 
-<div className='md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
-       <div  className='md:w-[20%] w-[100%]'>REPORT</div>
+     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+
+{(mobileextraFilters ) &&<div className='md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
+       <div  className='md:w-[20%] w-[100%] border border-[black] rounded md:border-none px-[10px] py-[15px] md:px-[0px] md:py-[0px]'>REPORT</div>
        <div className='hidden md:block md:w-[100%] md:ml-[25px]'>
       
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("GIA")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("GIA","lab")}>GIA</span>
@@ -851,9 +883,12 @@ setData(prevData => ({
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("AGS")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("AGS","lab")}>AGS</span>
               
        </div>
+     </div>}
      </div>
 
-     <OptionSlider 
+     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+
+     {(mobileextraFilters ) &&<OptionSlider 
      name="SYMM" 
      range={{ min: 0 , max: 5 }}
      data={Data} 
@@ -863,10 +898,20 @@ setData(prevData => ({
      right="filter_symmerty_max"
      flag="symm"
      kut={5}
+     bool={flag}
+     filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
      
-     />
+     />}
+     </div>
 
-<OptionSlider 
+     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+
+
+{(mobileextraFilters ) &&<OptionSlider 
         name="POLISH" 
         range={{ min: 0 , max: 5 }}
         data={Data} 
@@ -876,8 +921,19 @@ setData(prevData => ({
         right="filter_polish_max"
         flag="polish"
         kut={5}
-     />
-     <OptionSlider 
+        bool={flag}
+        filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+     />}
+
+     </div>
+
+
+     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+     {(mobileextraFilters ) &&<OptionSlider 
      name="TABLE" 
      range={{min:0,max:88}}
      data={Data} 
@@ -886,9 +942,18 @@ setData(prevData => ({
      left="filter_table_min"
      right="filter_table_max"
      flag="depth"
-     />
+     bool={flag}
+     filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+     />}
+     </div>
 
-<OptionSlider 
+     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+
+{(mobileextraFilters ) &&<OptionSlider 
         name="DEPTH" 
         range={{min:0,max:106.60}}
         data={Data} 
@@ -897,9 +962,18 @@ setData(prevData => ({
         left="filter_depth_min"
         right="filter_depth_max"
         flag="depth"
-     />
+        bool={flag}
+        filter={filterbox}
+                  filbox = {filterBox}
+                  ffbox={fBox}
+                  resett={reset}
+                  res={response.total_records}
+     />}
+     </div>
 
-<div className=' md:mb-[30px]  md:justify-between  md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
+     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+
+{(mobileextraFilters ) &&<div className=' md:mb-[30px]  md:justify-between  md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
        <div  className='md:w-[20%] w-[100%]'>LOCATE</div>
        <div className='  hidden md:block md:w-[100%] md:ml-[20px]'>
       
@@ -908,9 +982,10 @@ setData(prevData => ({
               
               
        </div>
-     </div>
+     </div>}</div>
+     {(mobileextraFilters ) &&<button className='md:hidden border border-[black] px-[10px] py-[10px] rounded'onClick={()=>showExtraFilters('minus')}><i className="fa-solid fa-xmark"></i></button>}
      
-</div>
+{/* </div> */}    </div>
 
 {/* <div className='block md:hidden w-[100%] text-center mb-[10px]'>
 <button className='bg-[black] text-[white] w-[100%] py-[8px]' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
@@ -939,7 +1014,7 @@ setData(prevData => ({
 
 
 <div className='hidden md:block max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
-  <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`}  onClick={show} > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i className="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
+  <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`} onClick={() => { show()}}  > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i className="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
    <div className='col-end justify-self-end self-center'><span className='cursor-pointer' onClick={reset}><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
    </div>
 
