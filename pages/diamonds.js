@@ -666,96 +666,24 @@ setData(prevData => ({
       height={100}
     />
    </div>
-   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] p-[10px] ${filterBox==='SHAPE' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
-     <div className='flex justify-between mb-[30px]'>
-       <p onClick={()=>filterbox('SHAPE')}>Close</p>
-       <p onClick={reset}>Reset</p>
-     </div>
-     <div className="grid grid-cols-4 gap-4">
-     {s}
-</div>
-<div className='flex justify-center mt-[20px]'>
-<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
-</div>
-   </div> */}
-   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] ${filterBox==='PRICE' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
-   <div className='flex justify-between mb-[30px]'>
-       <p onClick={()=>filterbox('PRICE')}>Close</p>
-       <p onClick={reset}>Reset</p>
-     </div>
-     <div className='flex justify-center'>
-     <OptionSlider 
-          range={priceArr} 
-          data={Data} 
-          click={handleChange} 
-          options={priceOptions} 
-          handleclick={handle}
-          left='filter_price_min'
-          right='filter_price_max'
-          flag="op"
-     />
-     </div>
-     
-     <div className='flex justify-center mt-[20px]'>
-<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
-</div>
-   </div> */}
-   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] ${filterBox==='CARAT' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
-   <div className='flex justify-between mb-[30px]'>
-       <p onClick={()=>filterbox('CARAT')}>Close</p>
-       <p onClick={reset}>Reset</p>
-       
-     </div>
-     <div className='flex justify-center'>
-       <OptionSlider 
-         
-          range={caratArr} 
-          data={Data} 
-          click={handleChange} 
-          options={caratOptions}
-          left="filter_carat_min"
-          right="filter_carat_max"
-          handleclick={handle}
-          flag="op"
-       />
-     </div>
-     <div className='flex justify-center mt-[20px]'>
-<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
-</div>
-   </div> */}
-   {/* <div className={`block md:hidden fixed z-40 h-[300px] w-[330px] ${filterBox==='CUT' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[white]` }>
-   <div className='flex justify-between mb-[30px]'>
-       <p onClick={()=>filterbox('CUT')}>Close</p>
-       <p onClick={reset}>Reset</p>
-       
-     </div>
-     <div className='flex justify-center'>
-     <OptionSlider 
-          
-          range={{ min: 0 , max: 4 }}
-          data={Data} 
-          click={handleChange} 
-          handleclick={handle}
-          left="filter_cut_min"
-          right="filter_cut_max"
-          flag="cut"
-          kut={4}
-        />
-     </div>
-     <div className='flex justify-center mt-[20px]'>
-<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('SHAPE')}>VIEW {response.total_records} RESULTS</button>
-</div>
-   </div> */}
-   {/* <div className={`block md:hidden fixed z-40 h-[300px] ${filterBox==='COLOR' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[pink]` }><p>COLOR</p></div>
-   <div className={`block md:hidden fixed z-40 h-[300px] ${filterBox==='CLARITY' && fBox?"bottom-0":" bottom-[-200px] hidden"}   bg-[pink]` }><p>CLARITY</p></div> */}
+  
    {!comparelist && <div className="container max-w-[1130px] mx-auto ">
    <div className='block md:hidden w-[100%] text-center mb-[10px]'>
 <button className='bg-[black] text-[white] w-[100%] py-[8px]' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
 </div>
    <div className="grid grid-cols-4  gap-x-2 gap-y-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] md:border-[#d1d1d1] ">
         {(mobileFilters)&&<div className='md:flex md:items-center md:mt-[30px] md:w-[100%]  '>
-         <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] rounded md:border-none' >SHAPE</div>
-         <div className='hidden md:block md:flex w-[100%] justify-between items-center '>{s}</div> 
+         <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] rounded md:border-none' onClick={()=>filterbox('SHAPE')}>SHAPE</div>
+         <div className={` fixed z-40 h-[300px] bg-[white] w-[390px] rounded  boxmobile md:shadow-none p-[20px] right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'SHAPE' && fBox?"bottom-0 duration-1000 ease-in-out":" bottom-[-200px] hidden md:block duration-1000 ease-in-out"}` }>
+         <div className='md:hidden flex justify-between mb-[30px]'>
+       <p onClick={()=>filterbox('SHAPE')}>Close</p>
+       <p onClick={()=>reset()} >Reset</p>
+     </div>
+         <div className='md:block md:w-[100%] m-auto flex  md:flex w-[100%] md:justify-between md:items-center '>{s}</div> 
+         <div className='md:hidden flex justify-center mt-[80px]'>
+<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('LOCATE')}>VIEW {response.total_records} RESULTS</button>
+</div>
+         </div>
        </div>}
 
        
@@ -775,10 +703,6 @@ setData(prevData => ({
                   resett={reset}
                   res={response.total_records}
             /> }
-           
-    
-     
-       
      
       {(mobileFilters)&&<OptionSlider 
           name="CARAT" 
@@ -791,14 +715,14 @@ setData(prevData => ({
           handleclick={handle}
           flag="op"
           filter={filterbox}
-                  filbox = {filterBox}
-                  ffbox={fBox}
-                  resett={reset}
-                  res={response.total_records}
+          filbox = {filterBox}
+          ffbox={fBox}
+          resett={reset}
+          res={response.total_records}
        />}
        {(mobileFilters)&&!mobileextraFilters&&<button className='md:hidden border border-[black] px-[10px] py-[10px] rounded' onClick={()=>showExtraFilters('plus')}>+</button>}
 
-      {(mobileFilters&&mobileextraFilters)&&<OptionSlider 
+      {(mobileFilters)&&<div className={`${mobileextraFilters?"block md:block":"hidden md:block"}`}><OptionSlider 
           name="CUT" 
           range={{ min: 0 , max: 4 }}
           data={Data} 
@@ -809,13 +733,13 @@ setData(prevData => ({
           flag="cut"
           kut={4}
           filter={filterbox}
-                  filbox = {filterBox}
-                  ffbox={fBox}
-                  resett={reset}
-                  res={response.total_records}
-        />}
+          filbox = {filterBox}
+          ffbox={fBox}
+          resett={reset}
+          res={response.total_records}
+        /></div>}
 
-      {(mobileextraFilters ) &&<OptionSlider 
+      {<div className={`${mobileextraFilters?"block md:block  ":"hidden md:block  "}`}><OptionSlider 
        name="COLOR" 
        range={{ min: 0 , max: 10 }}
        data={Data} 
@@ -826,13 +750,13 @@ setData(prevData => ({
        flag="color"
        kut={9}
        filter={filterbox}
-                  filbox = {filterBox}
-                  ffbox={fBox}
-                  resett={reset}
-                  res={response.total_records}
-       />}
+       filbox = {filterBox}
+       ffbox={fBox}
+       resett={reset}
+       res={response.total_records}
+       /></div>}
 
-{(mobileextraFilters ) &&<OptionSlider 
+{<div className={`${mobileextraFilters?"block   md:block ":"hidden md:block  "}`}><OptionSlider 
      name="CLARITY" 
      range={{ min: 0 , max: 9 }}
      data={Data} 
@@ -843,17 +767,17 @@ setData(prevData => ({
      flag="clarity"
      kut={9}
      filter={filterbox}
-                  filbox = {filterBox}
-                  ffbox={fBox}
-                  resett={reset}
-                  res={response.total_records}
+     filbox = {filterBox}
+     ffbox={fBox}
+     resett={reset}
+     res={response.total_records}
      
-     />}
+     /></div>}
   
 
       {/* <div className={`${flag?"md:inline-block grid grid-cols-4  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block grid grid-cols-4 md:max-h-[0px] flex flex-wrap  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}> */}
       <div className={`${flag?"md:inline-block  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
-   {(mobileextraFilters ) &&<OptionSlider 
+   {<div className={`${mobileextraFilters?"block md:block ":"hidden md:block "}`}><OptionSlider 
      name="FLUOR" 
      range={{ min: 0 , max: 4 }}
      data={Data} 
@@ -865,30 +789,40 @@ setData(prevData => ({
      kut={4}
      bool={flag}
      filter={filterbox}
-                  filbox = {filterBox}
-                  ffbox={fBox}
-                  resett={reset}
-                  res={response.total_records}
-     />}
+     filbox = {filterBox}
+     ffbox={fBox}
+     resett={reset}
+     res={response.total_records}
+     /></div>}
      </div>
 
      <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
 
-{(mobileextraFilters ) &&<div className='md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
-       <div  className='md:w-[20%] w-[100%] border border-[black] rounded md:border-none px-[10px] py-[15px] md:px-[0px] md:py-[0px]'>REPORT</div>
-       <div className='hidden md:block md:w-[100%] md:ml-[25px]'>
-      
+    {<div className={`${mobileextraFilters?"block md:block ":"hidden md:block "}`}><div className='md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
+       <div  className='md:w-[20%] w-[100%] border border-[black] rounded md:border-none px-[10px] py-[15px] md:px-[0px] md:py-[0px]' onClick={()=>filterbox('REPORT')}>REPORT</div>
+
+       <div className={` fixed z-40 h-[300px] bg-[white] w-[390px] rounded  boxmobile md:shadow-none p-[20px] right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'REPORT' && fBox?"bottom-0":" bottom-[-200px] hidden md:block"}` }>
+       <div className='md:hidden flex justify-between mb-[30px]'>
+       <p onClick={()=>filterbox('REPORT')}>Close</p>
+       <p onClick={()=>reset()} >Reset</p>
+     </div>
+       <div className=' md:block md:w-[100%] w-[100%] m-auto'>
+       <div className='flex justify-center md:justify-start'>
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("GIA")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("GIA","lab")}>GIA</span>
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("IGI")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("IGI","lab")}>IGI</span>
-              <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("AGS")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("AGS","lab")}>AGS</span>
-              
+              <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.lab.includes("AGS")?"bg-black text-white":"bg-white text-black"}`} onClick={() => flip("AGS","lab")}>AGS</span>  
+              </div> 
        </div>
-     </div>}
+       <div className='md:hidden flex justify-center mt-[80px]'>
+<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('LOCATE')}>VIEW {response.total_records} RESULTS</button>
+</div>
+       
+       </div>
+     </div></div>}
      </div>
-
      <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
 
-     {(mobileextraFilters ) &&<OptionSlider 
+     {<div className={`${mobileextraFilters?"block md:block":"hidden md:block"}`}><OptionSlider 
      name="SYMM" 
      range={{ min: 0 , max: 5 }}
      data={Data} 
@@ -900,18 +834,18 @@ setData(prevData => ({
      kut={5}
      bool={flag}
      filter={filterbox}
-                  filbox = {filterBox}
-                  ffbox={fBox}
-                  resett={reset}
-                  res={response.total_records}
+     filbox = {filterBox}
+     ffbox={fBox}
+     resett={reset}
+     res={response.total_records}
      
-     />}
+     /></div>}
      </div>
 
      <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
 
 
-{(mobileextraFilters ) &&<OptionSlider 
+{<div className={`${mobileextraFilters?"block md:block":"hidden md:block"}`}><OptionSlider 
         name="POLISH" 
         range={{ min: 0 , max: 5 }}
         data={Data} 
@@ -923,17 +857,17 @@ setData(prevData => ({
         kut={5}
         bool={flag}
         filter={filterbox}
-                  filbox = {filterBox}
+        filbox = {filterBox}
                   ffbox={fBox}
                   resett={reset}
                   res={response.total_records}
-     />}
+     /></div>}
 
      </div>
 
 
      <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
-     {(mobileextraFilters ) &&<OptionSlider 
+     {<div className={`${mobileextraFilters?"block md:block":"hidden md:block"}`}><OptionSlider 
      name="TABLE" 
      range={{min:0,max:88}}
      data={Data} 
@@ -948,12 +882,12 @@ setData(prevData => ({
                   ffbox={fBox}
                   resett={reset}
                   res={response.total_records}
-     />}
+     /></div>}
      </div>
 
      <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
 
-{(mobileextraFilters ) &&<OptionSlider 
+{<div className={`${mobileextraFilters?"block md:block":"hidden md:block"}`}><OptionSlider 
         name="DEPTH" 
         range={{min:0,max:106.60}}
         data={Data} 
@@ -964,53 +898,44 @@ setData(prevData => ({
         flag="depth"
         bool={flag}
         filter={filterbox}
-                  filbox = {filterBox}
-                  ffbox={fBox}
-                  resett={reset}
-                  res={response.total_records}
-     />}
+        filbox = {filterBox}
+        ffbox={fBox}
+        resett={reset}
+        res={response.total_records}
+     /></div>}
      </div>
 
-     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
 
-{(mobileextraFilters ) &&<div className=' md:mb-[30px]  md:justify-between  md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
-       <div  className='md:w-[20%] w-[100%]'>LOCATE</div>
-       <div className='  hidden md:block md:w-[100%] md:ml-[20px]'>
-      
-              <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.origin == "ALL" ?"bg-black text-white":"bg-white text-black"}`} onClick={() => origin("ALL")}>ALL</span>
+     <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[300px] lg:max-h-[300px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+
+{<div className={`${mobileextraFilters?"block md:block":"hidden md:block"}`}>
+  <div className=' md:mb-[30px]  md:justify-between  md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
+       <div  className='md:w-[20%] w-[100%] border border-[black] rounded md:border-none px-[10px] py-[15px] md:px-[0px] md:py-[0px]' onClick={()=>filterbox('LOCATE')}>LOCATE</div>
+
+       <div className={` fixed z-40 h-[300px] bg-[white] w-[390px] rounded  boxmobile md:shadow-none p-[20px] right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'LOCATE' && fBox?"bottom-0":" bottom-[-200px] hidden md:block"}` }>
+       <div className='md:hidden flex justify-between mb-[30px]'>
+       <p onClick={()=>filterbox('LOCATE')}>Close</p>
+       <p onClick={()=>reset()} >Reset</p>
+     </div>
+       <div className=' md:block md:w-[100%] w-[100%] m-auto '>
+         <div className='flex justify-center md:justify-start'>
+         <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.origin == "ALL" ?"bg-black text-white":"bg-white text-black"}`} onClick={() => origin("ALL")}>ALL</span>
               <span className={`w-[70px] py-[5px] border border-black inline-block text-center mr-[4px] cursor-pointer ${Data.origin == "UK" ?"bg-black text-white":"bg-white text-black"}`} onClick={() => origin("UK")}>UK</span>
-              
-              
+         </div>
+             
        </div>
-     </div>}</div>
+       <div className='md:hidden flex justify-center mt-[80px]'>
+<button className='bg-[black] text-[white] py-[10px] px-[20px]' onClick={()=>filterbox('LOCATE')}>VIEW {response.total_records} RESULTS</button>
+</div>
+       
+       </div>
+
+     </div></div>}</div>
      {(mobileextraFilters ) &&<button className='md:hidden border border-[black] px-[10px] py-[10px] rounded'onClick={()=>showExtraFilters('minus')}><i className="fa-solid fa-xmark"></i></button>}
      
 {/* </div> */}    </div>
 
-{/* <div className='block md:hidden w-[100%] text-center mb-[10px]'>
-<button className='bg-[black] text-[white] w-[100%] py-[8px]' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
-</div>
 
-{(mobileFilters)&&<div className="block md:hidden grid grid-cols-4 gap-x-2 gap-y-2 mb-[10px]">
- <button className='border border-[black] px-[10px] py-[10px] rounded ' onClick={()=>filterbox('SHAPE')}>SHAPE</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('PRICE')}>PRICE</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('CARAT')}>CARAT</button>
- {!mobileextraFilters&&<button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>showExtraFilters('plus')}>+</button>}
- {mobileextraFilters&&<button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('CUT')}>CUT </button>}
- </div>}
- {(mobileextraFilters ) &&<div className="block md:hidden grid grid-cols-4 gap-x-2 gap-y-2 mb-[10px]">
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('COLOR')}>COLOR  </button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('CLARITY')}>CLARITY  </button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('FLUOR')}>FLUOR</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('REPORT')}>REPORT</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('SYMM')}>SYMM</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('POLISH')}>POLISH</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('TABLE')}>TABLE</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('DEPTH')}>DEPTH</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded' onClick={()=>filterbox('LOCATE')}>LOCATE</button>
- <button className='border border-[black] px-[10px] py-[10px] rounded'onClick={()=>showExtraFilters('minus')}><i className="fa-solid fa-xmark"></i></button>
-
- </div>} */}
 
 
 <div className='hidden md:block max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
