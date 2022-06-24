@@ -3,6 +3,8 @@ import styles from '../styles/Home.module.css'
 import Image from 'next/image'
 import "nouislider/distribute/nouislider.css";
 import React, {useState,useEffect} from 'react'
+
+import info from '../public/images/info.png'
 import FormData from 'form-data';
 import axios from 'axios';
 import OptionSlider from '../components/OptionSlider'
@@ -424,12 +426,15 @@ let i=0
     setsaveid(p)
     
   }
+  let [op,setop]=useState('grid')
 
   function grid(){
     setGridlist(true)
+    setop('grid')
   }
   function list(){
     setGridlist(false)
+    setop('list')
   }
 
   function comparehearts(p,q){
@@ -505,7 +510,9 @@ let listLoader = []
  })
 
  function reset(){
+  localStorage.clear();
   setData(d)
+  
  }
 
 //  function lowpricesort(){
@@ -668,13 +675,13 @@ setData(prevData => ({
    </div>
   
    {!comparelist && <div className="container max-w-[1130px] mx-auto ">
-   <div className='block md:hidden w-[100%] text-center mb-[10px]'>
-<button className='bg-[black] text-[white] w-[100%] py-[8px]' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
+   <div className='block md:hidden w-[100%] text-center mb-[10px] sticky top-0 z-[200] '>
+<button className='bg-[black] text-[white] w-[100%] py-[8px] ' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
 </div>
-   <div className="grid grid-cols-4  gap-x-2 gap-y-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] md:border-[#d1d1d1] ">
+   <div className="grid grid-cols-4 sticky top-[41px] md:static bg-[white] z-50  gap-x-2   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] md:border-[#d1d1d1] ">
         {(mobileFilters)&&<div className='md:flex md:items-center md:mt-[30px] md:w-[100%]  '>
          <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] rounded md:border-none' onClick={()=>filterbox('SHAPE')}>SHAPE</div>
-         <div className={` fixed z-40 h-[300px] bg-[white] w-[390px] rounded  boxmobile md:shadow-none p-[20px] right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'SHAPE' && fBox?"bottom-0 duration-1000 ease-in-out":" bottom-[-200px] hidden md:block duration-1000 ease-in-out"}` }>
+         <div className={` fixed z-40 h-[300px] bottom-0 duration-1000 bg-[white] w-[390px] rounded  boxmobile md:shadow-none  right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'SHAPE' && fBox?" h-[300px] p-[20px] ":" h-0 md:block  "}` }>
          <div className='md:hidden flex justify-between mb-[30px]'>
        <p onClick={()=>filterbox('SHAPE')}>Close</p>
        <p onClick={()=>reset()} >Reset</p>
@@ -801,7 +808,7 @@ setData(prevData => ({
     {<div className={`${mobileextraFilters?"block md:block ":"hidden md:block "}`}><div className='md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
        <div  className='md:w-[20%] w-[100%] border border-[black] rounded md:border-none px-[10px] py-[15px] md:px-[0px] md:py-[0px]' onClick={()=>filterbox('REPORT')}>REPORT</div>
 
-       <div className={` fixed z-40 h-[300px] bg-[white] w-[390px] rounded  boxmobile md:shadow-none p-[20px] right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'REPORT' && fBox?"bottom-0":" bottom-[-200px] hidden md:block"}` }>
+       <div className={` fixed z-40 bottom-0 h-[300px] bg-[white] duration-1000 w-[390px] rounded left-0  boxmobile md:shadow-none  md:h-[auto] md:w-[100%] md:static ${filterBox=== 'REPORT' && fBox?" h-[300px] p-[20px]":"h-0  md:block"}` }>
        <div className='md:hidden flex justify-between mb-[30px]'>
        <p onClick={()=>filterbox('REPORT')}>Close</p>
        <p onClick={()=>reset()} >Reset</p>
@@ -912,7 +919,7 @@ setData(prevData => ({
   <div className=' md:mb-[30px]  md:justify-between  md:justify-between  md:flex  md:mt-[30px] md:w-[100%]'>
        <div  className='md:w-[20%] w-[100%] border border-[black] rounded md:border-none px-[10px] py-[15px] md:px-[0px] md:py-[0px]' onClick={()=>filterbox('LOCATE')}>LOCATE</div>
 
-       <div className={` fixed z-40 h-[300px] bg-[white] w-[390px] rounded  boxmobile md:shadow-none p-[20px] right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'LOCATE' && fBox?"bottom-0":" bottom-[-200px] hidden md:block"}` }>
+       <div className={` fixed z-40 bottom-0 duration-1000 left-0 h-[300px] bg-[white] w-[390px] rounded  boxmobile md:shadow-none   md:h-[auto] md:w-[100%] md:static ${filterBox=== 'LOCATE' && fBox?"h-[300px] p-[20px] ":" h-0 md:block"}` }>
        <div className='md:hidden flex justify-between mb-[30px]'>
        <p onClick={()=>filterbox('LOCATE')}>Close</p>
        <p onClick={()=>reset()} >Reset</p>
@@ -939,11 +946,11 @@ setData(prevData => ({
 
 
 <div className='hidden md:block max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
-  <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`} onClick={() => { show()}}  > {!flag?<i className="fa-solid fa-plus mr-[5px] "></i>:<i className="fa-solid fa-xmark mr-[5px] "></i>}  ADVANCE FILTER</button></div>   
-   <div className='col-end justify-self-end self-center'><span className='cursor-pointer' onClick={reset}><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
+  <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`} onClick={() => { show()}}  > <i className= {`duration-700 ${!flag?"rotate-0":"rotate-45"} fa-solid fa-plus mr-[5px]`} ></i>  ADVANCE FILTER</button></div>   
+   <div className='flex '><span className='cursor-pointer ml-auto' onClick={reset}><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
    </div>
 
-   <div className='hidden  md:block max-w-[100%] flex  mb-[15px] '>
+   <div className='hidden  md:flex max-w-[100%] flex  mb-[15px] '>
       <div className='ml-auto'>
         <input className='border border-[#ddd] min-w-[280px]  rounded' type="text" placeholder='Search by diamond or Certificate ID' 
                     value={search}
@@ -952,9 +959,10 @@ setData(prevData => ({
       </div>
    </div>
 
-
    <div className='w-[100%] flex justify-between items-center mb-[15px] mt-[20px]'>
-   <div className='w-[50%] md:w-auto'>Change: <i className="fa-solid fa-list cursor-pointer" onClick={list}></i>  <i className="fa-solid fa-grip cursor-pointer" onClick={grid}></i></div>
+
+   <div className='w-[50%] md:w-auto '>Change: <i className={`${op==="grid" ?"text-[#afafaf] fa-solid fa-list cursor-pointer":"text-[black] fa-solid fa-list cursor-pointer"}`} onClick={list}></i> <i className= {` ${op==="list" ?"text-[#afafaf] fa-solid fa-grip cursor-pointer":"text-[black] fa-solid fa-grip cursor-pointer" }`} onClick={grid}></i>  </div>
+
       <div className='w-[50%] md:w-auto'>
       <span className='hidden md:inline-block px-[5px] inline-block '>Sort By:</span><select value={selectedSort} onChange={handleSelectChange} className='w-[170px] md:min-w-[188px] py-[5px]'>
         <option  value="Price:Low-to-High">Price: Low-to-High</option>
@@ -978,7 +986,7 @@ setData(prevData => ({
 <button className={`inline-block h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
     <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto  md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`}>RECENTLY VIEWED (1)</button>
     <Link href="/compare">
-    <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`} onClick={compare}> COMPARE ({heartCount})</button>
+    <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`} onClick={compare}><i className="fa-solid fa-heart"></i> COMPARE ({heartCount})</button>
         </Link>
 </div>
   
@@ -998,7 +1006,7 @@ setData(prevData => ({
     }
   hasMore={true}
   loader={ 
-    <div className="grid grid-cols-4 gap-x-9 gap-y-2.5 w-[100%]  mb-[100px]">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-9 gap-y-2.5 w-[100%]  mb-[100px]">
     { l.map(item =>item)}
 </div>
   }
@@ -1055,7 +1063,7 @@ setData(prevData => ({
 
 
 {!gridlist&&
-  <div className="grid grid-cols-4  w-[100%]  border border-[#ddd] pb-[20px] mb-[100px]" >
+  <div className="grid grid-cols-4   w-[100%]  border border-[#ddd] pb-[20px] mb-[100px]" >
   <div className='col-span-3' id="scrollableDiv" style={{ height: 700, overflow: "auto" }}>
     <div className='bg-[black] justify-items-center w-[100%] grid grid-cols-9 text-[white] py-[10px] px-[10px] sticky top-0 '>
         <p>Compare</p>
@@ -1086,7 +1094,7 @@ setData(prevData => ({
   scrollableTarget="scrollableDiv"
 >
 {response.diamonds.map((item) => 
-    <div key={item} className=' w-[100%] grid grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer' onMouseEnter={()=>sideItem(item.stock_num)} >
+    <div key={item} className='odd:bg-white even:bg-[#f5f5f5] w-[100%] grid grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer ' onMouseEnter={()=>sideItem(item.stock_num)} >
         <p >{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart"></i>:<i className="fa-solid fa-heart" onClick={()=>comparehearts(item.stock_num)}></i>}</p>
         <p>{item.shape}</p>
         <p>{item.carat}</p>
@@ -1100,14 +1108,30 @@ setData(prevData => ({
 </InfiniteScroll>    
 </div>
 
-
-{response.diamonds.map((item) => sideItem && item.stock_num === saveid &&
-<div key={item} className='col-span-1'>
-<div className='bg-[black] w-[100%] flex justify-center text-[white] py-[10px] px-[10px]'>
+{!sideItems&&<div className='col-span-1'>
+  <div className='bg-[black] w-[100%] flex justify-center text-[white] py-[10px] px-[10px]'>
     <p className='text-center'>DIAMOND INFORMATION</p>
   </div>
-  <div>
-   <iframe  src={ sideItems && item.stock_num === saveid ? item.video_url:null} width="100%" height="300px">
+  <div className='flex items-center h-[100%] justify-center'>
+    <div className='text-center'>
+      <Image src={info} />
+      <p className='px-[70px] text-center mb-[20px]'>Hover over a diamond to see further details and shipping information.</p>
+
+      <p className='px-[70px] text-center mb-[20px]'>Tap a diamond to see further details and shipping information.</p>
+
+      <p className='px-[70px] text-center'>Check the compare box to send multiple diamonds to the comparison tab.</p>
+    </div>
+    
+  </div>
+  </div>}
+{response.diamonds.map((item) => sideItem && item.stock_num === saveid &&
+<div key={item} className='col-span-1'>
+  
+<div className='bg-[black] w-[100%] flex justify-center text-[white] md:py-[13px] md:px-[13px]  lg:py-[10px] lg:px-[10px]'>
+    <p className='text-center md:text-[12px] lg:text-[20px]'>DIAMOND INFORMATION</p>
+  </div>
+  <div className='lg:h-[300px] md:h-[200px] md:mt-[10px]'>
+   <iframe  src={ sideItems && item.stock_num === saveid ? item.video_url:null} width="100%" height="100%" >
    </iframe>
   </div>
   <div className='text-center mt-[15px] px-[10px]'>
