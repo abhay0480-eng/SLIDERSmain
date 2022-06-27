@@ -678,7 +678,7 @@ setData(prevData => ({
    <div className='block md:hidden w-[100%] text-center mb-[10px] sticky top-0 z-[200] '>
 <button className='bg-[black] text-[white] w-[100%] py-[8px] ' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
 </div>
-   <div className="grid grid-cols-4 sticky top-[41px] md:static bg-[white]  z-50   gap-x-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] lg:pb-[0px] md:border-[#d1d1d1] ">
+   <div className="grid grid-cols-4 sticky top-[41px] md:static bg-[white] pt-[10px] md:pt-[0px] gap-y-2 md:gap-y-0  z-50   gap-x-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] lg:pb-[0px] md:border-[#d1d1d1] ">
         {(mobileFilters)&&<div className='md:flex md:items-center md:mt-[30px] md:w-[100%]  '>
          <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] rounded md:border-none' onClick={()=>filterbox('SHAPE')}>SHAPE</div>
          <div className={` fixed z-40 h-[300px] bottom-0 duration-1000 bg-[white] w-[390px] rounded  boxmobile md:shadow-none  right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'SHAPE' && fBox?" h-[300px] p-[20px] ":" h-0 md:block  "}` }>
@@ -959,7 +959,7 @@ setData(prevData => ({
       </div>
    </div>
 
-   <div className='w-[100%] flex justify-between items-center mb-[1px] mt-[20px]'>
+   <div className='w-[100%] flex justify-between items-center md:mb-[1px] mb-[10px] mt-[20px]'>
 
    <div className='w-[50%] md:w-auto '>Change: <i className={`cursor-pointer fa-xl mr-[5px] ${op==="grid" ?"text-[#afafaf] fa-solid fa-list  ":"text-[black] fa-solid fa-list "}`} onClick={list}></i> <i className= {`cursor-pointer fa-xl ${op==="list" ?"text-[#afafaf] fa-solid fa-grip ":"text-[black] fa-solid fa-grip " }`} onClick={grid}></i>  </div>
 
@@ -983,10 +983,10 @@ setData(prevData => ({
 
    <div className="max-w-[100%]  grid grid-cols-1 gap-4 mb-[10px]">
 <div className='w-[100%] flex items-center'>
-<button className={`inline-block h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
+<button className={`inline-block h-[70px] mr-[5px] md:mr-[0px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
     <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto  md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`}>RECENTLY VIEWED (1)</button>
     <Link href="/compare">
-    <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`} onClick={compare}><i className="fa-solid fa-heart"></i> COMPARE ({heartCount})</button>
+    <button className={`inline-block text-[80%] ml-[5px] md:ml-[0px] md:text-[100%] h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`} onClick={compare}><i className="fa-solid fa-heart"></i> COMPARE ({heartCount})</button>
         </Link>
 </div>
   
@@ -1064,8 +1064,8 @@ setData(prevData => ({
 
 {!gridlist&&
   <div className="grid grid-cols-4   w-[100%]  border border-[#ddd] pb-[20px] mb-[100px]" >
-  <div className='col-span-3' id="scrollableDiv" style={{ height: 700, overflow: "auto" }}>
-    <div className='bg-[black] justify-items-center w-[100%] grid grid-cols-9 text-[white] py-[10px] px-[10px] sticky top-0 '>
+  <div className='col-span-4 md:col-span-3' id="scrollableDiv" style={{ height: 700, overflow: "auto" }}>
+    <div className='hidden md:grid bg-[black] justify-items-center w-[100%]  grid-cols-9 text-[white] py-[10px] px-[10px] sticky top-0 '>
         <p>Compare</p>
         <p>Shape</p>
         <p>Carat</p>
@@ -1094,7 +1094,7 @@ setData(prevData => ({
   scrollableTarget="scrollableDiv"
 >
 {response.diamonds.map((item) => 
-    <div key={item} className='odd:bg-white even:bg-[#f5f5f5] w-[100%] grid grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer ' onMouseEnter={()=>sideItem(item.stock_num)} >
+    <div key={item} className='odd:bg-white even:bg-[#f5f5f5] w-[100%] grid grid-cols-4  md:grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer ' onMouseEnter={()=>sideItem(item.stock_num)} >
         <p >{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart"></i>:<i className="fa-solid fa-heart" onClick={()=>comparehearts(item.stock_num)}></i>}</p>
         <p>{item.shape}</p>
         <p>{item.carat}</p>
@@ -1108,7 +1108,7 @@ setData(prevData => ({
 </InfiniteScroll>    
 </div>
 
-{!sideItems&&<div className='col-span-1'>
+{!sideItems&&<div className='!hidden md:!block col-span-1'>
   <div className='bg-[black] w-[100%] flex justify-center text-[white] py-[10px] px-[10px]'>
     <p className='text-center'>DIAMOND INFORMATION</p>
   </div>

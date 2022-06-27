@@ -147,16 +147,6 @@ export default function compare(){
             }  
             }, []);
 
-       
-          
-
-    // function remove(p){
-    //     const index = compareItems.indexOf(p);
-    //     compareItems.splice(index, 1)
-       
-    //     setheartCount(prev=>prev-1)
-    //   }
-
       useEffect(() => {
    
         localStorage.setItem('compare', JSON.stringify(compareItems))
@@ -377,7 +367,7 @@ setHigh(p)
       
       <h1 className='text-[2em] text-center mb-[40px]'>Compare Diamond({res.length})</h1>
       <div className='  w-[100%]  flex'>
-      <div className="w-[15%] relative">
+      <div className="min-w-[40%] md:min-w-[20%] lg:min-w-[15%] relative">
       <div className="grid grid-rows-15 col-span-1 text-right  ">
       <div className='border border-[black] h-[40px]'></div>
       <div className='border border-[black] h-[150px] p-[10px] '>Image</div>
@@ -453,8 +443,8 @@ setHigh(p)
     </div>
     </div>
    {(compareItems === undefined || compareItems.length == 0) && <div className= {`w-[85%] flex justify-center aa`} id='parent'><div className='text-center'><h1 className='text-[1.4em]'>Currently there are no diamonds selected.</h1><p>To compare diamonds, conduct a diamond search, select your diamonds and click 'Compare'.</p></div></div>}
- {(!a === undefined || !a.length == 0) && <div className= {` overflow-x-scroll w-[85%] flex  aa`} id='parent'>
-  {res.map((item) =>  <div key={item.stock_num} className={ ` bb duration-1000 overflow-hidden bg-[white] ${compareItems.includes(item.stock_num)?"w-[20%] ":"w-[0%]"} `} id={item.stock_num}>
+ {(!a === undefined || !a.length == 0) && <div className= {` overflow-x-scroll  grid grid-rows-1 grid-flow-col aa`} id='parent'>
+  {res.map((item) =>  <div key={item.stock_num} className={ ` bb duration-1000 overflow-hidden bg-[white] ${compareItems.includes(item.stock_num)?"w-[190px] ":"w-[0px]"} `} id={item.stock_num}>
 
     {/* 1 */}
         <div  className={`border border-[black] h-[40px] cursor-pointer flex items-center justify-center pp ${high==="1"&&"!bg-[#dddddd]"}`} ><i onClick={()=>swapLeft(item.stock_num)} className="fa-solid fa-arrow-left-long mr-[30px]"></i><p onClick={()=>{ const index = compareItems.indexOf(item.stock_num);
