@@ -11,7 +11,7 @@ function OptionSlider(props){
 
     return(
      
-        <div className='md:flex md:justify-between md:mt-[30px] md:w-[100%]  '>
+        <div className='md:flex md:justify-between md:mt-[36px]  md:w-[100%]  '>
         <div className="md:w-[20%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] rounded md:border-none" onClick={()=>props.filter(props.name)}>{props.name}</div>
         <div className={` fixed overflow-hidden left-0 duration-1000 bottom-0  z-40  w-full rounded boxmobile md:shadow-none  md:h-[auto] md:w-[100%] md:static ${props.filbox===props.name && props.ffbox?"h-[300px] p-[20px]":"  h-0  md:block"}   bg-[white]` }>
         <div className='md:hidden flex justify-between mb-[30px]'>

@@ -674,11 +674,11 @@ setData(prevData => ({
     />
    </div>
   
-   {!comparelist && <div className="container max-w-[1130px] mx-auto ">
+   {!comparelist && <div className="container md:max-w-[1130px]  relative mx-auto ">
    <div className='block md:hidden w-[100%] text-center mb-[10px] sticky top-0 z-[200] '>
 <button className='bg-[black] text-[white] w-[100%] py-[8px] ' onClick={showFilters}>Filter  {mobileFilters?<i className="fa-solid fa-angle-down"></i>:<i className="fa-solid fa-angle-up"></i>}</button>
 </div>
-   <div className="grid grid-cols-4 sticky top-[41px] md:static bg-[white] z-50  gap-x-2   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] md:border-[#d1d1d1] ">
+   <div className="grid grid-cols-4 sticky top-[41px] md:static bg-[white]  z-50   gap-x-2  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%]  md:border-b md:pb-[20px] lg:pb-[0px] md:border-[#d1d1d1] ">
         {(mobileFilters)&&<div className='md:flex md:items-center md:mt-[30px] md:w-[100%]  '>
          <div className=' md:w-[20%] w-[100%] px-[10px] py-[15px] md:px-[0px] md:py-[0px] border border-[black] rounded md:border-none' onClick={()=>filterbox('SHAPE')}>SHAPE</div>
          <div className={` fixed z-40 h-[300px] bottom-0 duration-1000 bg-[white] w-[390px] rounded  boxmobile md:shadow-none  right-[2px] md:h-[auto] md:w-[100%] md:static ${filterBox=== 'SHAPE' && fBox?" h-[300px] p-[20px] ":" h-0 md:block  "}` }>
@@ -693,7 +693,7 @@ setData(prevData => ({
          </div>
        </div>}
 
-       
+       < hr className='hidden lg:block lg:absolute lg:w-[100%] lg:border lg:border-[#d1d1d1]  lg:top-[300px] '/>
         {(mobileFilters)&&<OptionSlider 
                   name="PRICE" 
                   range={priceArr} 
@@ -746,7 +746,7 @@ setData(prevData => ({
           res={response.total_records}
         /></div>}
 
-      {<div className={`${mobileextraFilters?"block md:block  ":"hidden md:block  "}`}><OptionSlider 
+      {<div className={`md:block md:mb-[20px] ${mobileextraFilters?"block   ":"hidden   "}`}><OptionSlider 
        name="COLOR" 
        range={{ min: 0 , max: 10 }}
        data={Data} 
@@ -783,8 +783,8 @@ setData(prevData => ({
   
 
       {/* <div className={`${flag?"md:inline-block grid grid-cols-4  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block grid grid-cols-4 md:max-h-[0px] flex flex-wrap  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}> */}
-      <div className={`${flag?"md:inline-block  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
-   {<div className={`${mobileextraFilters?"block md:block ":"hidden md:block "}`}><OptionSlider 
+      <div className={`${flag?"md:inline-block   md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20 w-[100%] md:max-h-[700px] lg:max-h-[500px] overflow-hidden duration-1000 ease-in":"md:inline-block  md:max-h-[0px]  md:grid-cols-1 md:gap-x-20  lg:grid-cols-2 lg:gap-x-20  w-[100%] overflow-hidden duration-1000 ease-out"}`}>
+   {<div className={`md:block   ${mobileextraFilters?"block  ":"hidden "}`}><OptionSlider 
      name="FLUOR" 
      range={{ min: 0 , max: 4 }}
      data={Data} 
@@ -959,9 +959,9 @@ setData(prevData => ({
       </div>
    </div>
 
-   <div className='w-[100%] flex justify-between items-center mb-[15px] mt-[20px]'>
+   <div className='w-[100%] flex justify-between items-center mb-[1px] mt-[20px]'>
 
-   <div className='w-[50%] md:w-auto '>Change: <i className={`${op==="grid" ?"text-[#afafaf] fa-solid fa-list cursor-pointer":"text-[black] fa-solid fa-list cursor-pointer"}`} onClick={list}></i> <i className= {` ${op==="list" ?"text-[#afafaf] fa-solid fa-grip cursor-pointer":"text-[black] fa-solid fa-grip cursor-pointer" }`} onClick={grid}></i>  </div>
+   <div className='w-[50%] md:w-auto '>Change: <i className={`cursor-pointer fa-xl mr-[5px] ${op==="grid" ?"text-[#afafaf] fa-solid fa-list  ":"text-[black] fa-solid fa-list "}`} onClick={list}></i> <i className= {`cursor-pointer fa-xl ${op==="list" ?"text-[#afafaf] fa-solid fa-grip ":"text-[black] fa-solid fa-grip " }`} onClick={grid}></i>  </div>
 
       <div className='w-[50%] md:w-auto'>
       <span className='hidden md:inline-block px-[5px] inline-block '>Sort By:</span><select value={selectedSort} onChange={handleSelectChange} className='w-[170px] md:min-w-[188px] py-[5px]'>
