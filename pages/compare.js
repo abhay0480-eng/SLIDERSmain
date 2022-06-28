@@ -347,7 +347,8 @@ setHigh(p)
  function highlightout(){
   setHigh('')
  }
- 
+ const [isHide, setIsHide] = useState(true);
+ setTimeout(() => setIsHide(false), 4000);
 
   
     return(
@@ -442,7 +443,7 @@ setHigh(p)
 
     </div>
     </div>
-   {(compareItems === undefined || compareItems.length == 0) && <div className= {`w-[85%] flex justify-center aa`} id='parent'><div className='text-center'><h1 className='text-[1.4em]'>Currently there are no diamonds selected.</h1><p>To compare diamonds, conduct a diamond search, select your diamonds and click 'Compare'.</p></div></div>}
+   {!isHide&&(compareItems === undefined || compareItems.length == 0) &&   <div className= {`w-[85%] flex justify-center aa`} id='parent'><div className='text-center'><h1 className='text-[1.4em]'>Currently there are no diamonds selected.</h1><p>To compare diamonds, conduct a diamond search, select your diamonds and click 'Compare'.</p></div></div>}
  {(!a === undefined || !a.length == 0) && <div className= {` overflow-x-scroll  grid grid-rows-1 grid-flow-col aa`} id='parent'>
   {res.map((item) =>  <div key={item.stock_num} className={ ` bb duration-1000 overflow-hidden bg-[white] ${compareItems.includes(item.stock_num)?"w-[190px] ":"w-[0px]"} `} id={item.stock_num}>
 

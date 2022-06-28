@@ -982,11 +982,11 @@ setData(prevData => ({
    </div>
 
    <div className="max-w-[100%]  grid grid-cols-1 gap-4 mb-[10px]">
-<div className='w-[100%] flex items-center'>
-<button className={`inline-block h-[70px] mr-[5px] md:mr-[0px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
-    <button className={`inline-block  h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto  md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`}>RECENTLY VIEWED (1)</button>
+<div className='w-[100%] md:w-[75%]  lg:w-[50%] grid grid-cols-3 '>
+<button className={` mr-[5px] md:mr-[0px] md:h-[55px] h-[60px]   bg-[black] text-[white] border border-[white] mb-[1px]`} >RECORDS ({response.total_records})</button>
+    <button className={` md:h-[55px] h-[60px]    bg-[white] text-[black] border border-[black] mb-[1px]`}>RECENTLY VIEWED (1)</button>
     <Link href="/compare">
-    <button className={`inline-block text-[80%] ml-[5px] md:ml-[0px] md:text-[100%] h-[70px] px-[5px] py-[5px] md:w-auto md:h-auto md:px-[20px] md:py-[8px] bg-[white] text-[black] border border-[black] mb-[1px]`} onClick={compare}><i className="fa-solid fa-heart"></i> COMPARE ({heartCount})</button>
+    <button className={` text-[80%] ml-[5px] md:ml-[0px] md:text-[100%] md:h-[55px] h-[60px]   bg-[white] text-[black] border border-[black] mb-[1px]`} onClick={compare}><i className="fa-solid fa-heart"></i> COMPARE ({heartCount})</button>
         </Link>
 </div>
   
@@ -1011,10 +1011,10 @@ setData(prevData => ({
 </div>
   }
 >
-<div className="grid grid-cols-2 md:grid-cols-3 md:gap-x-9 md:gap-y-2.5 w-[100%] lg:grid-cols-4">
+<div className="grid  gap-x-1  grid-cols-2 md:grid-cols-3 md:gap-x-9 md:gap-y-2.5 w-[100%] lg:grid-cols-4">
 {!response && l.map(item =>item)}
 {response.diamonds.map((item) =>
-<div key={item.stock_num} className=' border-[#dddddd] border hover:border hover:border-[black]'>
+<div key={item.stock_num} className=' md:border-[#dddddd] md:border md:hover:border md:hover:border-[black]'>
 { item.image_url?
   <div className={` ${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
     <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
@@ -1023,7 +1023,7 @@ setData(prevData => ({
             item.image_url
           )}`} alt="hh"  className=' object-cover'  width="100%" height="100%" layout="responsive" objectFit="cover"/>{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>:<i className="fa-solid fa-heart absolute top-[5px] right-[5px]" onClick={()=>comparehearts(item.stock_num)}></i>}
       </div>
-      <div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb]":" flip-card-back bg-[#ebebeb]"}`}>
+      <div className={`text-[12px] md:text-[16px] ${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb]":" flip-card-back bg-[#ebebeb]"}`}>
       <p className='mb-[5px]'>SKU: {item.stock_num}</p>
       <p className='mb-[5px]'>Report: {item.lab}</p>
       <p className='mb-[5px]'>Table: {item.table_percent}</p>
@@ -1037,7 +1037,7 @@ setData(prevData => ({
          <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
     <Image src={`https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/${(names[item.shape]).toLowerCase()}.jpg`} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" objectFit="cover"/>{!compareItems.includes(item.stock_num) ?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>:<i className="fa-solid fa-heart absolute top-[5px] right-[5px]" onClick={()=>comparehearts(item.stock_num)}></i>}
-    </div><div className={`${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
+    </div><div className={`text-[12px] md:text-[17px]  ${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
       <p className='mb-[5px]'>SKU: {item.stock_num}</p>
       <p className='mb-[5px]'>Report: {item.lab}</p>
       <p className='mb-[5px]'>Table: {item.table_percent}</p>
@@ -1049,12 +1049,12 @@ setData(prevData => ({
       </div></div></div>}
 
   
-  <div className='border-[#dddddd] p-[10px] border' onMouseOver={()=>ul(item.stock_num)} onMouseOut={ ()=>ulout(item.stock_num)}>
+  <div className='border-[#dddddd] p-[10px] border text-[13px]' onMouseOver={()=>ul(item.stock_num)} onMouseOut={ ()=>ulout(item.stock_num)}>
     <div className={`${tu && item.stock_num === saveid?"underline":"no-underline"}`}>{item.carat} carat {names[item.shape] }</div>
     <div>{item.cut==="VG"?"Very Good":item.cut==="EX"?"Exellent":item.cut==="GD"?"Good":item.cut==="F"?"Fair":"Poor"} | {item.color} | {item.clarity}</div> 
     <div className='flex justify-between' >
       <div>£ {parseInt(item.fame_price) } (ex VAT)</div>
-      <div className='cursor-pointer' onMouseOver={()=>turn(item.stock_num)} onMouseOut={ ()=>turnout(item.stock_num)}>details {turnn && item.stock_num === saveid?"-":"+"}</div>
+      <div className='cursor-pointer ' onMouseOver={()=>turn(item.stock_num)} onMouseOut={ ()=>turnout(item.stock_num)}>details {turnn && item.stock_num === saveid?"-":"+"}</div>
     </div>
     </div>
     </div>)}
@@ -1095,15 +1095,16 @@ setData(prevData => ({
 >
 {response.diamonds.map((item) => 
     <div key={item} className='odd:bg-white even:bg-[#f5f5f5] w-[100%] grid grid-cols-4  md:grid-cols-9 justify-items-center py-[10px] px-[10px]  cursor-pointer ' onMouseEnter={()=>sideItem(item.stock_num)} >
-        <p >{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart"></i>:<i className="fa-solid fa-heart" onClick={()=>comparehearts(item.stock_num)}></i>}</p>
-        <p>{item.shape}</p>
-        <p>{item.carat}</p>
-        <p>{item.color}</p>
-        <p>{item.clarity}</p>
-        <p>{item.cut}</p>
-        <p>{item.lab}</p>
-        <p>£ {parseInt(item.fame_price) }</p>
-        <p>view</p>
+        <p className='order-4 md:order-none'>{!compareItems.includes(item.stock_num)?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart"></i>:<i className="fa-solid fa-heart" onClick={()=>comparehearts(item.stock_num)}></i>}</p>
+        <p className='order-first md:order-none content-end relative md:static'><p className='absolute md:static right-[-28px] bottom-0'>{item.shape}</p></p>
+        <p className='order-1 md:order-none text-center mb-[20px]'>{item.carat}<br/><p className='md:hidden block'>CARAT</p></p>
+        <p className='order-2 md:order-none text-center'>{item.color}<br/><p className='md:hidden block'>COLOR</p></p>
+        <p className='order-7 md:order-none text-center'>{item.clarity}<br/><p className='md:hidden block'>CLARITY</p></p>
+        <p className='order-5 md:order-none text-center'>{names[item.cut]}<br/><p className='md:hidden block'>CUT</p></p>
+        <p className='hidden md:block order-6 md:order-none'>{item.lab}</p>
+        <p className='order-3 md:order-none relative md:static'><p className='absolute md:static right-[-28px] bottom-0'>£ {parseInt(item.fame_price) }<br/><p className='md:hidden block'>PRICE</p></p></p>
+        <p className='order-last md:order-none text-center'>view</p>
+        
     </div>)}
 </InfiniteScroll>    
 </div>
@@ -1232,13 +1233,9 @@ setData(prevData => ({
     <div>{item.table_percent}</div>
   </div>)}
 </div>
-      
-    
     </div>
-  </div>}
-
-
-   </div>
+    </div>}
+    </div>
   )
 }
 
