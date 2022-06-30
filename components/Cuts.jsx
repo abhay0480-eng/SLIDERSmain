@@ -8,12 +8,12 @@ function Cuts(prop){
     let five=[]
 
     for(let i=1;i<`${prop.p}`;i++){
-      let a = 100/`${prop.p}`
-      prop.p===4?three.push(`${a*i}%`):prop.p===9? ten.push(`${a*i}%`):five.push(`${a*i}%`)
+      let a = 98/`${prop.p}`
+      prop.p===4?three.push(`${a*i}%`):prop.p===10? ten.push(`${a*i}%`):five.push(`${a*i}%`)
     }
    
     let colour = ten.map(te=>{
-      return <span key={te} className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[10px]`} style={{left:te}}>|</span>
+      return <span key={te} className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[5px]`} style={{left:te}}>|</span>
 
     })
     let cut1 = three.map(t=>{
@@ -22,7 +22,7 @@ function Cuts(prop){
       let symm = five.map(t=>{
         return  <span key={t} className={`absolute top-[-10px]  z-50 text-[#ffffff] w-[12px]`} style={{left:t}}>|</span>
       })
-    return  <>{prop.p===9? colour:prop.p ===4?cut1:prop.p===5?symm :null}</>  
+    return  <>{prop.p===10? colour:prop.p ===4?cut1:prop.p===5?symm :null}</>  
 }
 
 export default Cuts

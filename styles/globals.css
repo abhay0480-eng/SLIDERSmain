@@ -10,7 +10,14 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
 }
+
+/* div,span{
+  background-color: rgb(230, 112, 131, 0.3);
+} */
+
+
 
 a {
   color: inherit;
@@ -45,12 +52,20 @@ a {
   box-shadow: none;
   border-radius: 36px;
   position: absolute;
-  z-index: 10;
+
+
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
+.noUi-base{
+  z-index: unset !important;
+}
 
+.noUi-origin{
+  transform: translate(-10%, 0px);
+  z-index: 200 !important;
+}
 
 .noUi-handle::after {
   content: "";
@@ -64,14 +79,14 @@ a {
 }
 
 html:not([dir="rtl"]) .noUi-horizontal .noUi-handle-lower {
+ 
   right: -12px !important;
-  z-index: 200 !important;
   left: -1px;
 }
 
 html:not([dir="rtl"]) .noUi-horizontal .noUi-handle-upper {
+
   right: -1px !important;
-  z-index: 200 !important;
   left: -1px;
 }
 
@@ -141,11 +156,11 @@ input{
  
 }
 
-.bb:first-child > .pp> .fa-arrow-left-long{
+.bb:first-child > .pp> .left-long> .fa-arrow-left-long{
   display: none;
 }
 
-.bb:last-child > .pp> .fa-arrow-right-long{
+.bb:last-child > .pp> .right-long> .fa-arrow-right-long{
   display: none;
 }
 

@@ -347,8 +347,8 @@ setHigh(p)
  function highlightout(){
   setHigh('')
  }
- const [isHide, setIsHide] = useState(true);
- setTimeout(() => setIsHide(false), 4000);
+
+ 
 
   
     return(
@@ -388,9 +388,6 @@ setHigh(p)
     
       </div>}
       </div>
-      
-    
-      
       <div className='border border-[black] h-[40px] p-[10px] relative'>Carat Weight <i onClick={()=>infobox('carat')} className="text-[#888684] fa-solid fa-circle-info"></i>{hide&& boxName==='carat'&&<div className='w-[300px] absolute left-[169px] top-[-70px] z-40 bg-[white] border border-[#bdbdbd] box p-[20px]'><h2 className='text-left mb-[10px]'>Carat (ct.)</h2>
         <hr/><p className='text-left mt-[10px] '>The international unit of weight, used for measuring diamonds and gemstones. 1 carat is equal to 200 milligrams, or 0.2 grams.</p></div>}
 </div>
@@ -443,14 +440,18 @@ setHigh(p)
 
     </div>
     </div>
-   {!isHide&&(compareItems === undefined || compareItems.length == 0) &&   <div className= {`w-[85%] flex justify-center aa`} id='parent'><div className='text-center'><h1 className='text-[1.4em]'>Currently there are no diamonds selected.</h1><p>To compare diamonds, conduct a diamond search, select your diamonds and click 'Compare'.</p></div></div>}
- {(!a === undefined || !a.length == 0) && <div className= {` overflow-x-scroll  grid grid-rows-1 grid-flow-col aa`} id='parent'>
+  
+   
+ {(!a === undefined || !a.length == 0) ?<div className= {` overflow-x-scroll  grid grid-rows-1 grid-flow-col aa`} id='parent'>
   {res.map((item) =>  <div key={item.stock_num} className={ ` bb duration-1000 overflow-hidden bg-[white] ${compareItems.includes(item.stock_num)?"w-[190px] ":"w-[0px]"} `} id={item.stock_num}>
 
     {/* 1 */}
-        <div  className={`border border-[black] h-[40px] cursor-pointer flex items-center justify-center pp ${high==="1"&&"!bg-[#dddddd]"}`} ><i onClick={()=>swapLeft(item.stock_num)} className="fa-solid fa-arrow-left-long mr-[30px]"></i><p onClick={()=>{ const index = compareItems.indexOf(item.stock_num);
+        <div  className={`border border-[black] h-[40px] cursor-pointer grid grid-cols-3 pp ${high==="1"&&"!bg-[#dddddd]"}`} ><div className='left-long text-center'><i onClick={()=>swapLeft(item.stock_num)} className="fa-solid fa-arrow-left-long "></i></div><div><p className='text-center' onClick={()=>{ const index = compareItems.indexOf(item.stock_num);
         compareItems.splice(index, 1)
-        setheartCount(prev=>prev-1)}}>remove</p><i onClick={()=>swapRight(item.stock_num)} className="fa-solid fa-arrow-right-long ml-[30px]"></i></div>
+        setheartCount(prev=>prev-1)
+     
+     
+        }}>remove</p></div><div className='right-long text-center'><i onClick={()=>swapRight(item.stock_num)} className="fa-solid fa-arrow-right-long "></i></div></div>
 
         {/* 2 */}
       <div className={`border border-[black] h-[150px] overflow-hidden bg-center bg-[#f5f5f5] ${high==="2"&&"!bg-[#dddddd]"}`}>{ item.image_url?<Image src={`/api/imagefetcher?url=${encodeURIComponent(
@@ -500,8 +501,9 @@ setHigh(p)
       {/* 16 */}
       <div className={`border border-[black] h-[40px] flex items-center justify-center bg-[#f5f5f5] ${high==="16"?"!bg-[#dddddd]":"!bg-[#f5f5f5]"}`} onMouseEnter={()=>highlight('16')} onMouseLeave={()=>highlightout()}>{ item.table_percent}</div>
     </div>)}
-  </div>
+  </div>:<div className= {` w-[85%] flex justify-center aa`} id='parent'><div className='text-center'><h1 className='text-[1.4em]'>Currently there are no diamonds selected.</h1><p>To compare diamonds, conduct a diamond search, select your diamonds and click 'Compare'.</p></div></div>
     }
+
 
         
       

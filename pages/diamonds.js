@@ -755,7 +755,7 @@ setData(prevData => ({
        right="filter_color_max"
        handleclick={handle}
        flag="color"
-       kut={9}
+       kut={10}
        filter={filterbox}
        filbox = {filterBox}
        ffbox={fBox}
@@ -772,7 +772,7 @@ setData(prevData => ({
      left="filter_clarity_min"
      right="filter_clarity_max"
      flag="clarity"
-     kut={9}
+     kut={10}
      filter={filterbox}
      filbox = {filterBox}
      ffbox={fBox}
@@ -944,7 +944,6 @@ setData(prevData => ({
 
 
 
-
 <div className='hidden md:block max-w-[100%] grid grid-cols-3 gap-4   border-t  border-[#d1d1d1] mb-[15px]'>
   <div className='col-start-2'><button className={`mx-auto block  px-[20px] py-[12px] bg-[black] text-[white] border border-[white]  hover:bg-[white] hover:text-[black] hover:border-[black] hover:border`} onClick={() => { show()}}  > <i className= {`duration-700 ${!flag?"rotate-0":"rotate-45"} fa-solid fa-plus mr-[5px]`} ></i>  ADVANCE FILTER</button></div>   
    <div className='flex '><span className='cursor-pointer ml-auto' onClick={reset}><i className="fa-solid fa-rotate-left"></i> RESET SEARCH</span> </div>
@@ -1028,24 +1027,25 @@ setData(prevData => ({
       <p className='mb-[5px]'>Report: {item.lab}</p>
       <p className='mb-[5px]'>Table: {item.table_percent}</p>
       <p className='mb-[5px]'>Depth: {item.depth}</p>
-      <p className='mb-[5px]'>Symmetry: {item.symmetry==="VG"?"Very Good":item.symmetry==="EX"?"Exellent":item.symmetry==="GD"?"Good":item.symmetry==="F"?"Fair":"Poor"}</p>
-      <p className='mb-[5px]'>Polish: {item.polish==="VG"?"Very Good":item.polish==="EX"?"Exellent":item.polish==="GD"?"Good":item.polish==="F"?"Fair":"Poor"}</p>
-      <p >Fluor: {item.fluorescence==="STG"?"Strong":item.fluorescence==="MED"?"Medium":item.fluorescence==="FNT"?"Faint":"None"}</p>
+      <p className='mb-[5px]'>Symmetry: {names[item.symmetry]}</p>
+      <p className='mb-[5px]'>Polish: {names[item.polish]}</p>
+    
+      <p >Fluor: {names[item.fluorescence]}</p>
       </div>
     </div>
   </div>:<div className={`${turnn && item.stock_num === saveid ?"relative  flip-card":"relative"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-inner ":"flip-card-inner"}`}>
          <div className={`${turnn && item.stock_num === saveid?"flip-card-front":"flip-card-front"}`}>
     <Image src={`https://flawlessfinejewelry.com/wp-content/plugins/ring-builder/images/diamond_new_icons/new/${(names[item.shape]).toLowerCase()}.jpg`} alt="hh" className=' object-cover' width="100%" height="100%" layout="responsive" objectFit="cover"/>{!compareItems.includes(item.stock_num) ?<i onClick={()=>comparehearts(item.stock_num)} className="fa-regular fa-heart absolute top-[5px] right-[5px]"></i>:<i className="fa-solid fa-heart absolute top-[5px] right-[5px]" onClick={()=>comparehearts(item.stock_num)}></i>}
-    </div><div className={`text-[12px] md:text-[17px]  ${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
+    </div><div className={`text-[12px] md:text-[16px]  ${turnn && item.stock_num === saveid?" flip-card-back bg-[#ebebeb] ":" flip-card-back bg-[#ebebeb]"}`}>
       <p className='mb-[5px]'>SKU: {item.stock_num}</p>
       <p className='mb-[5px]'>Report: {item.lab}</p>
       <p className='mb-[5px]'>Table: {item.table_percent}</p>
       <p className='mb-[5px]'>Depth: {item.depth}</p>
-      <p className='mb-[5px]'>Symmetry: {item.symmetry==="VG"?"Very Good":item.symmetry==="EX"?"Exellent":item.symmetry==="GD"?"Good":item.symmetry==="F"?"Fair":"Poor"}</p>
-      <p className='mb-[5px]'>Polish: {item.polish==="VG"?"Very Good":item.polish==="EX"?"Exellent":item.polish==="GD"?"Good":item.polish==="F"?"Fair":"Poor"}</p>
-      <p className='mb-[5px]'>Polish: {item.polish}</p>
-      <p >Fluor: {item.fluorescence==="STG"?"Strong":item.fluorescence==="MED"?"Medium":item.fluorescence==="FNT"?"Faint":"None"}</p>
+      <p className='mb-[5px]'>Symmetry: {names[item.symmetry]}</p>
+      <p className='mb-[5px]'>Polish: {names[item.polish]}</p>
+    
+      <p >Fluor: {names[item.fluorescence]}</p>
       </div></div></div>}
 
   
